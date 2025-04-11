@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+  --font-montagu: "Montagu Slab", sans-serif;
+  --font-mont: Montserrat, sans-serif;
+  --font-mooli: Mooli, sans-serif;
+}
+
+.app-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  /* padding: 0 1rem; */
+}
