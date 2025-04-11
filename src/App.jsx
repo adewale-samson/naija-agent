@@ -9,12 +9,14 @@ import Signup from './Pages/Signup'
 function App() {
 
   return (
-    <Routes>
-      <Route index element={<Homepage />}/>
-      <Route path='about' element={<About />}/>
-      <Route path='login' element={<Login />}/>
-      <Route path='signup' element={<Signup />}/>
-    </Routes>
+    <div className='app-container'>
+      <Routes>
+        <Route index element={<Homepage />}/>
+        <Route path='about' element={<About />}/>
+        <Route path='login' element={<Login />}/>
+        <Route path='signup' element={<Signup />}/>
+      </Routes>
+    </div>
   )
 }
 
