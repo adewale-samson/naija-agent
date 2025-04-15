@@ -9,11 +9,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[80px]">
-      <div className="flex justify-between items-center pt-[30px]">
+    <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[40px] py-[30px]">
+      <div className="flex justify-between items-center">
         <Link>
-          <p className="text-[#000000] text-[18px] lg:text-[20px] leading-[100%] tracking-[0%] font-bold">
-            NAIJA AGENTS
+          <p className="text-[#337E66] text-[18px] lg:text-[32px] leading-[100%] tracking-[0%] font-bold">
+            RentIt
           </p>
         </Link>
 
