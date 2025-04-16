@@ -9,11 +9,9 @@ import Footer from "../Components/Footer";
 const Homepage = () => {
   return (
     <div className="font-mont">
-      <Navbar />
       <Hero />
       <RentInfo />
       <ReviewSection />
-      <Footer />
     </div>
   );
 };

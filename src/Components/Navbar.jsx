@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[40px] py-[30px]">
       <div className="flex justify-between items-center">
-        <Link>
+        <Link to='/'>
           <p className="text-[#337E66] text-[18px] lg:text-[32px] leading-[100%] tracking-[0%] font-bold">
             RentIt
           </p>
@@ -45,8 +45,8 @@ const Navbar = () => {
 
         {/* Desktop menu */}
         <ul className="hidden md:flex gap-[8px] lg:gap-[16px] font-medium items-center text-[16px] leading-[100%] tracking-[0%]">
-          <Link>
-            <li className="w-fit bg-[#00BB91] rounded-[15px] font-bold text-[20px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[10px]">
+          <Link to='/'>
+            <li className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]">
               Home
             </li>
           </Link>
@@ -75,8 +75,8 @@ const Navbar = () => {
         } md:hidden absolute top-[100%] left-0 right-0 bg-white shadow-lg`}
       >
         <ul className="flex flex-col py-4 px-4 gap-4 font-medium text-[16px] leading-[100%] tracking-[0%]">
-          <Link>
-            <li className="w-fit bg-[#00BB91] rounded-[15px] font-bold text-[20px] text-[#FFFFFF] px-[31.5px] py-[10px]">
+          <Link to='/'>
+            <li className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[31.5px] py-[7px]">
               Home
             </li>
           </Link>
