@@ -69,10 +69,10 @@ const Signup = () => {
       <ToastContainer />
       <div className="bg-[#fff] border-b-[1px] xm:border-b-[0px] border-b-[#337E66]">
         <Link to="/">
-          <h1 className='font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto xm:m-[0px] py-[20px] xm:pb-[0px] xm:px-4'>RentIt</h1>
+          <h1 className='font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]'>RentIt</h1>
         </Link>
       </div>
-      <section className="font-mont py-[30px] xm:py-[0px]">
+      <section className="font-mont py-[0px] sm:py-[30px]">
         <div className="w-[100%] sm:w-[616px] bg-[#fff] p-[16px] sm:p-[32px] rounded-[8px] mx-auto py-5">
           <h1 className="text-[32px] font-medium leading-[41.6px] text-[#2A2A2A] mb-2 mt-8 text-center ">
             Create an Account
@@ -101,7 +101,7 @@ const Signup = () => {
                   value={values.fullName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none "
+                  className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "
                 />
             </div>
               <div className="mb-6 sm:mb-4">
@@ -124,7 +124,7 @@ const Signup = () => {
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none"
+                  className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
                 />
               </div>
               <div className="mb-6 sm:mb-4">
@@ -147,7 +147,7 @@ const Signup = () => {
                   value={values.phoneNumber}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none"
+                  className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
                 />
               </div>
               <div className="mb-6 sm:mb-4">
@@ -170,7 +170,7 @@ const Signup = () => {
                   value={values.address}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none "
+                  className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "
                 />
             </div>
             <div className="mb-6 sm:mb-4">
@@ -193,7 +193,7 @@ const Signup = () => {
                   value={values.instagramUrl}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none "
+                  className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "
                 />
             </div>
             <div className="relative mt-4 sm:mt-6">
@@ -216,7 +216,7 @@ const Signup = () => {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
+                className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
               />
               <div
                 className="absolute right-[10px] top-[60%] cursor-pointer"
@@ -238,14 +238,14 @@ const Signup = () => {
                 {errors.checkbox && touched.checkbox ? (
                   <label
                     htmlFor="checkbox"
-                    className="text-[#fc8181] block text-[14px] xm:text-[12px] font-regular leading-[16.8px] xm:leading-[18px]"
+                    className="text-[#fc8181] block text-[14px] font-regular leading-[16.8px]"
                   >
                     {errors.checkbox}
                   </label>
                 ) : (
                   <label
                     htmlFor="checkbox"
-                    className="text-[14px] xm:text-[12px] font-regular leading-[16.8px] xm:leading-[18px] block "
+                    className="text-[12px] sm:text-[14px] font-regular leading-[16.8px] sm:leading-[18px] block "
                   >
                     Accept all
                     <a href="#" target="_blank">
@@ -283,7 +283,7 @@ const Signup = () => {
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
               Already have an account ?{" "}
               <Link to="/login">
-                <span className="text-[#1453FF] cursor-pointer">Login</span>
+                <span className="text-[#337E66] cursor-pointer">Login</span>
               </Link>
             </p>
           </form>

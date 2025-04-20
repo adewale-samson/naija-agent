@@ -51,7 +51,7 @@ const Login = () => {
       <ToastContainer />
       <div className="bg-[#fff] border-b-[1px] xm:border-b-[0px] border-b-[#337E66]">
         <Link to="/">
-          <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto xm:m-[0px] py-[20px] xm:pb-[0px] xm:px-4">
+          <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
             RentIt
           </h1>
         </Link>
@@ -85,7 +85,7 @@ const Login = () => {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none"
+                className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[270px] md:w-[100%] rounded-[8px] p-[15px] outline-none"
               />
             </div>
             <div className="relative my-4 sm:my-6">
@@ -115,7 +115,7 @@ const Login = () => {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="font-inter block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
+                className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
               />
               <div
                 className="absolute right-[10px] top-[60%] cursor-pointer"
