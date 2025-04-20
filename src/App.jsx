@@ -5,6 +5,7 @@ import Login from "./Pages/Login";
 import About from "./Pages/About";
 import Signup from "./Pages/Signup";
 import RootLayout from "./layouts/RootLayout";
+import Trending from "./Pages/Trending";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route element={<RootLayout />}>
           <Route index element={<Homepage />} />
           <Route path="about" element={<About />} />
+          <Route path="trending" element={<Trending />} />
         </Route>
 
         {/* Authentication routes without Header and Footer */}
