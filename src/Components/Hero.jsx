@@ -22,7 +22,7 @@ const Hero = () => {
           {/* Buttons */}
           <div className="flex flex-wrap gap-4">
             <button className="w-[178px] bg-[#337E66] text-[#fff] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#006a50] transition">
-              Search home
+              Search here
             </button>
             <button className="w-[178px] border border-[#337E66] bg-[#fff] text-[#007F5F] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#f0fdfa] transition">
               Sign up
