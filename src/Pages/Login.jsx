@@ -37,20 +37,22 @@ const Login = () => {
           setLoader(true); 
           await LoginAuth(values)
           .then(res => {
-            console.log(res)
+            // console.log(res)
             Cookies.set('token', res.data.token, { expires: 1 });
             toast.success("Login successful!");
             actions.resetForm();
-            navigate('/agentform');
+            setTimeout(() => {
+              navigate('/agentform');
+            }, 2500);
           })
           .catch(err => {
-            console.log(err)
+            // console.log(err)
             toast.error(err?.response?.data?.message || "Something went wrong!");
           })
           
         } catch (error) {
           toast.error("Failed to create account. Please try again.");
-          console.error("Signup error:", error);
+          // console.error("Signup error:", error);
         } finally {
           setLoader(false);
           actions.setSubmitting(false);

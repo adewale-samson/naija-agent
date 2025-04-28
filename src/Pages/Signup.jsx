@@ -69,19 +69,21 @@ const Signup = () => {
       setLoader(true); 
       await SignupAuth(values)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         toast.success("Account created successfully!");
         actions.resetForm();
-        navigate('/login');
+        setTimeout(()=>{
+          navigate('/login');
+        }, 2500)
       })
       .catch(err => {
-        console.log(err)
+        // console.log(err)
         toast.error(err?.response?.data?.message || "Something went wrong!");
       })
       
     } catch (error) {
       toast.error("Failed to create account. Please try again.");
-      console.error("Signup error:", error);
+      // console.error("Signup error:", error);
     } finally {
       setLoader(false);
       actions.setSubmitting(false);
@@ -102,7 +104,7 @@ const Signup = () => {
     validationSchema: schema,
     onSubmit,
   });
-  console.log(errors)
+  // console.log(errors)
   return (
     <div className="min-h-screen  bg-[#B3D3C9] xm:bg-[#fff]">
       <ToastContainer />
@@ -265,7 +267,7 @@ const Signup = () => {
               </div>
             </div>
             <div className="mb-[32px]">
-              <div className="font-inter mb-2 mt-3 flex items-center gap-[3px]">
+              {/* <div className="font-inter mb-2 mt-3 flex items-center gap-[3px]">
                 <input
                   type="checkbox"
                   id="checkbox"
@@ -301,7 +303,7 @@ const Signup = () => {
                     </a>
                   </label>
                 )}
-              </div>
+              </div> */}
             </div>
             <button
               type="submit"

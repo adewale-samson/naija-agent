@@ -8,9 +8,10 @@ import RootLayout from "./layouts/RootLayout";
 import Trending from "./Pages/Trending";
 import CityPage from "./Pages/CityPage";
 import AgentForm from "./Pages/AgentForm";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import Verify from "./Pages/Verify";
 import Verified from "./Pages/Verified";
+
 
 function App() {
   return (
