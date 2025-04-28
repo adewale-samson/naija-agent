@@ -39,14 +39,27 @@ const Signup = () => {
       .required("Email is required"),
     name: yup.string().required("Full name is required"),
     address: yup.string().required("Address is required"),
-    instagram: yup.string().required("Instagram url is required"),
+    instagram: yup
+    .string()
+    .required("Instagram url is required")
+    .matches(
+      /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9_.]+(\/)?$/,
+      "Please enter a valid Instagram URL (e.g., https://instagram.com/username)"
+    ),
     phone: yup
       .string()
       .matches(/^\+?[0-9]+$/, "Enter valid phone number")
       .min(11, "Number must be at least 11 digits")
       .max(15, "Number must not exceed 15 digits")
       .required("Phone number is required"),
-    password: yup.string().required("Password is required").min(8),
+    password: yup
+    .string()
+    .required("Password is required")
+    .min(8)
+    .matches(
+      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+      "Password must contain at least one uppercase letter, one number and one special character"
+    ),
     // checkbox: yup.boolean().oneOf([true], "Please accept the terms"),
   });
 
