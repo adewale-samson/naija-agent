@@ -3,25 +3,30 @@ import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router'
 import { useNavigate } from 'react-router';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { useSignup } from '../hooks/useSignup';
 import * as yup from 'yup'
 import Spinner from '../assets/loader.gif'
+import { SignupAuth } from '../api/auth';
 
 
 const initialValues = {
-  fullName: "",
+  name: "",
   email: "",
-  phoneNumber: "",
+  phone: "",
   address: '',
-  instagramUrl: '',
+  instagram: '',
   password: "",
-  checkbox: false,
+  // checkbox: false,
 };
 
 const Signup = () => {
   
   const [showPassword, setShowPassword] = useState(false);
   const [loader, setLoader] = useState(false);
+
+  const { mutate, isPending, isError } = useSignup();
+
 
   const navigate = useNavigate();
   const toggleVisibility = () => {
@@ -32,22 +37,42 @@ const Signup = () => {
       .string()
       .email("Please enter a valid email")
       .required("Email is required"),
-    fullName: yup.string().required("Full name is required"),
+    name: yup.string().required("Full name is required"),
     address: yup.string().required("Address is required"),
-    instagramUrl: yup.string().required("Instagram url is required"),
-    phoneNumber: yup
+    instagram: yup.string().required("Instagram url is required"),
+    phone: yup
       .string()
       .matches(/^\+?[0-9]+$/, "Enter valid phone number")
       .min(11, "Number must be at least 11 digits")
       .max(15, "Number must not exceed 15 digits")
       .required("Phone number is required"),
     password: yup.string().required("Password is required").min(8),
-    checkbox: yup.boolean().oneOf([true], "Please accept the terms").required(),
+    // checkbox: yup.boolean().oneOf([true], "Please accept the terms"),
   });
 
   const onSubmit = async (values, actions) => {
-    console.log(values)
-    navigate('/')
+    try {
+      console.log(values)
+      setLoader(true); 
+      await SignupAuth(values)
+      .then(res => {
+        console.log(res)
+        toast.success("Account created successfully!");
+        actions.resetForm();
+        navigate('/login');
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error(err?.response?.data?.message || "Something went wrong!");
+      })
+      
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.");
+      console.error("Signup error:", error);
+    } finally {
+      setLoader(false);
+      actions.setSubmitting(false);
+    }
   };
 
 
@@ -64,8 +89,9 @@ const Signup = () => {
     validationSchema: schema,
     onSubmit,
   });
+  console.log(errors)
   return (
-    <div className="min-h-screen  bg-[#EFF6FF] xm:bg-[#fff]">
+    <div className="min-h-screen  bg-[#B3D3C9] xm:bg-[#fff]">
       <ToastContainer />
       <div className="bg-[#fff] border-b-[1px] xm:border-b-[0px] border-b-[#337E66]">
         <Link to="/">
@@ -83,22 +109,22 @@ const Signup = () => {
           <form className="text-[#333] font-regular" onSubmit={handleSubmit}>
             <div className="mb-6 sm:mb-4">
                 <label
-                  htmlFor="fullName"
+                  htmlFor="name"
                   className={
-                    errors.fullName && touched.fullName
+                    errors.name && touched.name
                       ? "text-[#fc8181] block mb-2"
                       : "block mb-2"
                   }
                 >
-                  {errors.fullName && touched.fullName
-                    ? `${errors.fullName}`
+                  {errors.name && touched.name
+                    ? `${errors.name}`
                     : "Full name"}
                 </label>
                 <input
                   type="text"
-                  id="fullName"
+                  id="name"
                   placeholder="Enter full name"
-                  value={values.fullName}
+                  value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "
@@ -129,22 +155,22 @@ const Signup = () => {
               </div>
               <div className="mb-6 sm:mb-4">
                 <label
-                  htmlFor="phoneNumber"
+                  htmlFor="phone"
                   className={
-                    errors.phoneNumber && touched.phoneNumber
+                    errors.phone && touched.phone
                       ? "text-[#fc8181] block mb-2"
                       : "block mb-2 "
                   }
                 >
-                  {errors.phoneNumber && touched.phoneNumber
-                    ? `${errors.phoneNumber}`
+                  {errors.phone && touched.phone
+                    ? `${errors.phone}`
                     : "Phone Number"}
                 </label>
                 <input
                   type="text"
-                  id="phoneNumber"
+                  id="phone"
                   placeholder="Enter phone number"
-                  value={values.phoneNumber}
+                  value={values.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
@@ -175,22 +201,22 @@ const Signup = () => {
             </div>
             <div className="mb-6 sm:mb-4">
                 <label
-                  htmlFor="instagramUrl"
+                  htmlFor="instagram"
                   className={
-                    errors.instagramUrl && touched.instagramUrl
+                    errors.instagram && touched.instagram
                       ? "text-[#fc8181] block mb-2"
                       : "block mb-2"
                   }
                 >
-                  {errors.instagramUrl && touched.instagramUrl
-                    ? `${errors.instagramUrl}`
+                  {errors.instagram && touched.instagram
+                    ? `${errors.instagram}`
                     : "Instagram Url"}
                 </label>
                 <input
                   type="text"
-                  id="instagramUrl"
+                  id="instagram"
                   placeholder="Enter your instagram url"
-                  value={values.instagramUrl}
+                  value={values.instagram}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "

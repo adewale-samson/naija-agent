@@ -1,0 +1,94 @@
+import { useParams } from "react-router";
+import Girl from "../assets/city-img.png";
+
+const CityPage = () => {
+  const { cityName } = useParams();
+  const locationData = [
+    {
+      image: Girl,
+      name: "Bamidele Ayeni",
+      location: cityName.toUpperCase(),
+      fee: "10000",
+      closedDeal: 100,
+    },
+    {
+      image: Girl,
+      name: "Tolani Alex",
+      location: cityName.toUpperCase(),
+      fee: "5000",
+      closedDeal: 100,
+    },
+    {
+      image: Girl,
+      name: "Cassie",
+      location: cityName.toUpperCase(),
+      fee: "10000",
+      closedDeal: 100,
+    },
+    {
+      image: Girl,
+      name: "Marie John",
+      location: cityName.toUpperCase(),
+      fee: "10000",
+      closedDeal: 100,
+    },
+    {
+      image: Girl,
+      name: "Sands&Crystals",
+      location: cityName.toUpperCase(),
+      fee: "10000",
+      closedDeal: 100,
+    },
+  ];
+
+  return (
+    <section className="font-mont px-4 sm:px-6 py-[24px]">
+      <div>
+        {locationData.map((data, index, arr) => (
+          <div className={`flex items-center justify-between px-[25px] py-[20px] border border-[#00000038] rounded-[20px] ${arr.length - 1 === index ? 'mb-[0px]': 'mb-[16px]'}`}>
+            <div className="w-fit">
+              <div className="w-[88px] h-[88px] overflow-hidden rounded-[50%]">
+                <img src={data.image} className="w-full h-full object-cover" />
+              </div>
+              <h3 className="font-[600] text-[16px] text-[#000] text-center leading-[150%] tracking-[0] mt-[14px]">
+                {data.name}
+              </h3>
+            </div>
+            <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
+              CALL
+            </p>
+            <div>
+              <h4 className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0] mb-[8px]">
+                LOCATION
+              </h4>
+              <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
+                {data.location}
+              </p>
+            </div>
+            <div>
+              <h4 className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0] mb-[8px]">
+                INSPECTION FEE
+              </h4>
+              <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
+                N{data.fee}
+              </p>
+            </div>
+            <div>
+              <h4 className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0] mb-[8px]">
+                DEALS CLOSED
+              </h4>
+              <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
+                OVER {data.closedDeal}
+              </p>
+            </div>
+            <button className="w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[16px] leading-[150%] tracking-[0] rounded-[15px]">
+              See More
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default CityPage;

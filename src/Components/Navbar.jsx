@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,11 +11,11 @@ const Navbar = () => {
   return (
     <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[40px] py-[30px]">
       <div className="flex justify-between items-center">
-        <Link to='/'>
+        <NavLink to="/">
           <p className="text-[#337E66] text-[18px] lg:text-[32px] leading-[100%] tracking-[0%] font-bold">
             RentIt
           </p>
-        </Link>
+        </NavLink>
 
         {/* Mobile menu button */}
         <button className="md:hidden flex items-center" onClick={toggleMenu}>
@@ -44,28 +44,41 @@ const Navbar = () => {
         </button>
 
         {/* Desktop menu */}
-        <ul className="hidden md:flex gap-[8px] lg:gap-[16px] font-medium items-center text-[16px] leading-[100%] tracking-[0%]">
-          <Link to='/'>
-            <li className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]">
-              Home
-            </li>
-          </Link>
-          <Link to="/about">
-            <li>ABOUT US</li>
-          </Link>
-          <Link to="signup">
-            <li>SIGN UP</li>
-          </Link>
-          <Link to="/">
-            <li>ABUJA</li>
-          </Link>
-          <Link to="/">
-            <li>LAGOS</li>
-          </Link>
-          <Link to="/">
-            <li>OTHERS</li>
-          </Link>
-        </ul>
+        <div className="hidden md:flex items-center gap-4">
+          <ul className="flex gap-[8px] lg:gap-[16px] font-medium items-center text-[16px] leading-[100%] tracking-[0%]">
+            {[
+              { to: "/", label: "Home" },
+              { to: "/about", label: "ABOUT US" },
+              { to: "/abuja", label: "ABUJA" },
+              { to: "/lagos", label: "LAGOS" },
+              { to: "/others", label: "OTHERS" },
+            ].map(({ to, label }) => (
+              <NavLink
+                key={label}
+                to={to}
+                className={({ isActive }) =>
+                  isActive
+                    ? "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+                    : ""
+                }
+              >
+                <li>{label}</li>
+              </NavLink>
+            ))}
+          </ul>
+          <NavLink
+            to="signup"
+            className={({ isActive }) =>
+              `${
+                isActive
+                  ? "bg-[#337E66] text-[#FFFFFF]"
+                  : "bg-transparent border-2 border-[#337E66] text-[#337E66]"
+              } rounded-[15px] font-bold text-[16px] px-[20px] lg:px-[31.5px] py-[7px]`
+            }
+          >
+            SIGN UP
+          </NavLink>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -75,26 +88,37 @@ const Navbar = () => {
         } md:hidden absolute top-[100%] left-0 right-0 bg-white shadow-lg`}
       >
         <ul className="flex flex-col py-4 px-4 gap-4 font-medium text-[16px] leading-[100%] tracking-[0%]">
-          <Link to='/'>
-            <li className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[31.5px] py-[7px]">
-              Home
-            </li>
-          </Link>
-          <Link to="/about">
-            <li>ABOUT US</li>
-          </Link>
-          <Link to="signup">
-            <li>SIGN UP</li>
-          </Link>
-          <Link to="/">
-            <li>ABUJA</li>
-          </Link>
-          <Link to="/">
-            <li>LAGOS</li>
-          </Link>
-          <Link to="/">
-            <li>OTHERS</li>
-          </Link>
+          {[
+            { to: "/", label: "Home" },
+            { to: "/about", label: "ABOUT US" },
+            { to: "/location/abuja", label: "ABUJA" },
+            { to: "/location/lagos", label: "LAGOS" },
+            { to: "/location/others", label: "OTHERS" },
+          ].map(({ to, label }) => (
+            <NavLink
+              key={label}
+              to={to}
+              className={({ isActive }) =>
+                isActive
+                  ? "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[31.5px] py-[7px]"
+                  : ""
+              }
+            >
+              <li>{label}</li>
+            </NavLink>
+          ))}
+          <NavLink
+            to="signup"
+            className={({ isActive }) =>
+              `${
+                isActive
+                  ? "bg-[#337E66] text-[#FFFFFF]"
+                  : "bg-transparent border-2 border-[#337E66] text-[#337E66]"
+              } rounded-[15px] font-bold text-[16px] px-[31.5px] py-[7px]`
+            }
+          >
+            SIGN UP
+          </NavLink>
         </ul>
       </div>
     </nav>
