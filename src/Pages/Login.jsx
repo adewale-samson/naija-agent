@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router";
 import { useNavigate } from "react-router";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import Spinner from "../assets/loader.gif";
+import { LoginAuth } from "../api/auth";
+import Cookies from 'js-cookie'
+
 
 const initialValues = {
   email: "",
@@ -29,8 +32,31 @@ const Login = () => {
   });
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    navigate("/");
+    try {
+          console.log(values)
+          setLoader(true); 
+          await LoginAuth(values)
+          .then(res => {
+            // console.log(res)
+            Cookies.set('token', res.data.token, { expires: 1 });
+            toast.success("Login successful!");
+            actions.resetForm();
+            setTimeout(() => {
+              navigate('/agentform');
+            }, 2500);
+          })
+          .catch(err => {
+            // console.log(err)
+            toast.error(err?.response?.data?.message || "Something went wrong!");
+          })
+          
+        } catch (error) {
+          toast.error("Failed to create account. Please try again.");
+          // console.error("Signup error:", error);
+        } finally {
+          setLoader(false);
+          actions.setSubmitting(false);
+        }
   };
 
   const {
@@ -47,7 +73,7 @@ const Login = () => {
     onSubmit,
   });
   return (
-    <div className="min-h-screen  bg-[#EFF6FF] xm:bg-[#fff]">
+    <div className="min-h-screen  bg-[#B3D3C9] xm:bg-[#fff]">
       <ToastContainer />
       <div className="bg-[#fff] border-b-[1px] xm:border-b-[0px] border-b-[#337E66]">
         <Link to="/">
