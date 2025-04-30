@@ -1,9 +1,33 @@
+import { useEffect, useState } from "react";
 import HeroLady from "../assets/hero-lady.png";
 import { AiOutlineHome } from "react-icons/ai";
 import { AiFillHome } from "react-icons/ai";
 import { BsTelephone } from "react-icons/bs";
+import Cookies from 'js-cookie'
 
 const Hero = () => {
+  const [userToken, setUserToken] = useState(null);
+    const [showSignup, setShowSignup] = useState(true)
+  useEffect(() => {
+        try {
+          const token = Cookies.get("token");
+          if (token) {
+            setUserToken(token);
+          } else {
+          }
+        } catch (error) {
+          // console.error("Error retrieving token:", error);
+        }
+      }, [])
+      useEffect(()=>{
+          if (userToken) {
+            setShowSignup(false)  
+          } else {
+            setShowSignup(true)
+
+          }
+      
+        },[userToken])
   return (
     <section className="font-mont bg-[#F9FAFB] px-[16px] sm:px-[33px] ">
       <div className="max-w-7xl border border-[#D9D9D9] rounded-[20px] bg-[#E7ECF080] px-6 pt-[32px] pb-[40px] md:pb-[157px] grid md:grid-cols-2 gap-10 items-center">
@@ -24,9 +48,9 @@ const Hero = () => {
             <button className="w-[178px] bg-[#337E66] text-[#fff] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#006a50] transition">
               Search here
             </button>
-            <button className="w-[178px] border border-[#337E66] bg-[#fff] text-[#007F5F] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#f0fdfa] transition">
+            {showSignup && <button className="w-[178px] border border-[#337E66] bg-[#fff] text-[#007F5F] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#f0fdfa] transition">
               Sign up
-            </button>
+            </button>}
           </div>
 
           {/* Tags */}

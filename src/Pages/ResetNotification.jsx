@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
+import Cookies from 'js-cookie'
 
 const ResetNotification = () => {
+    const [firstName, setFirstName] = useState('');
+        const [email, setEmail] = useState('');
+    
+      useEffect(() => {
+            try {
+              const name = Cookies.get("name");
+              const email = Cookies.get("email");
+              if (name) {
+                setFirstName(name);
+              } else {
+                return
+              }
+              if(email){
+                setEmail(email)
+              } return
+            } catch (error) {
+            //   console.error("Error retrieving token:", error);
+            }
+          }, []);
   return (
     <div className="min-h-screen font-mont bg-[#fff] sm:bg-[#B3D3C9] ">
       <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
@@ -17,8 +37,8 @@ const ResetNotification = () => {
             Password Reset Email
           </h1>
           <p className="font-regular text-[16px] text-[#828282] leading-[25.44px] text-start sm:text-center pb-[179px] sm:pb-[48px]">
-          Hi {'firstName'}! A reset password link has been sent to {'email'}. Kindly click on the button in the email sent to your email address to reset your password.
-            <span className="text-[#337E66]">{"email"}</span>
+          Hi {firstName}! A reset password link has been sent to {email}. Kindly click on the button in the email sent to your email address to reset your password.
+            {/* <span className="text-[#337E66]">{email}</span> */}
           </p>
         </div>
       </div>
