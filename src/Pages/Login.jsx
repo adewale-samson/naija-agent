@@ -33,7 +33,7 @@ const Login = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-          console.log(values)
+          // console.log(values)
           setLoader(true); 
           await LoginAuth(values)
           .then(res => {
@@ -42,7 +42,11 @@ const Login = () => {
             toast.success("Login successful!");
             actions.resetForm();
             setTimeout(() => {
-              navigate('/agentform');
+              if(res.data.data.user.image){
+                navigate('/')
+              } else {
+                navigate('/agentform')
+              }
             }, 2500);
           })
           .catch(err => {

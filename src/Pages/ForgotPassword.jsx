@@ -1,8 +1,11 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
+import { forgotPassword } from '../api/auth';
+import Spinner from "../assets/loader.gif";
+import Cookies from 'js-cookie'
 
 const initialValues = {
     email: "",
@@ -25,16 +28,19 @@ const ForgotPassword = () => {
             setLoader(true); 
             await forgotPassword(values)
             .then(res => {
-              console.log(res)
+            //   console.log(res)
+              Cookies.set('name', getFirstName(res.data.user.name), { expires: 1 });
+                Cookies.set('email', res.data.user.email, { expires: 1 });
+              navigate('/reset-success')
             })
             .catch(err => {
-              console.log(err)
+            //   console.log(err)
               toast.error(err?.response?.data?.message || "Something went wrong!");
             })
             
           } catch (error) {
             toast.error("Failed to create account. Please try again.");
-            console.error("Signup error:", error);
+            // console.error("Signup error:", error);
           } finally {
             setLoader(false);
             actions.setSubmitting(false);
@@ -54,6 +60,12 @@ const ForgotPassword = () => {
       validationSchema: schema,
       onSubmit,
     });
+    function getFirstName(fullName) {
+        if (!fullName) return '';
+        
+        const parts = fullName.trim().split(' ');
+        return parts[0];
+      }
   return (
     <div className="min-h-screen bg-[#fff] sm:bg-[#B3D3C9]">
       <ToastContainer />

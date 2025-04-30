@@ -72,9 +72,9 @@ const Signup = () => {
       setLoader(true); 
       await SignupAuth(values)
       .then(res => {
-        console.log(res)
-        Cookies.set('name', res.data.response.name, { expires: 1 });
-        Cookies.set('email', getFirstName(res.data.response.email), { expires: 1 });
+        // console.log(res)
+        Cookies.set('name', getFirstName(res.data.response.name), { expires: 1 });
+        Cookies.set('email', res.data.response.email, { expires: 1 });
         toast.success("Account created successfully!");
         actions.resetForm();
         setTimeout(()=>{

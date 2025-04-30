@@ -28,7 +28,7 @@ const CityPage = () => {
     .catch(err => {
       console.log(err)
     })
-  },[userToken])
+  },[userToken, cityName])
   console.log(userToken)
   const locationData = [
     {

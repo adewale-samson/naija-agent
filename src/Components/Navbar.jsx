@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { useNavigate, NavLink } from "react-router";
+import Cookies from 'js-cookie'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,13 +8,13 @@ const Navbar = () => {
   const [showSignup, setShowSignup] = useState(true)
   const [showSignout, setShowSignout] = useState(false)
 
+  const navigate = useNavigate()
+
     useEffect(() => {
       try {
         const token = Cookies.get("token");
         if (token) {
           setUserToken(token);
-          setShowSignup(false)
-          setShowSignout(true)
         } else {
         }
       } catch (error) {
@@ -34,9 +35,11 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-console.log(showSignout)
-console.log(showSignup)
-console.log(userToken)
+  const handleSignout = () => {
+    Cookies.remove('token');
+    window.location.reload();
+    // navigate('/')
+  }
   return (
     <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[40px] py-[30px]">
       <div className="flex justify-between items-center">
@@ -87,7 +90,8 @@ console.log(userToken)
                 to={to}
                 className={({ isActive }) =>
                   isActive
-                    ? "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+                    // ? "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+                    ? "border-b-2 border-[#337E66]"
                     : ""
                 }
               >
@@ -101,24 +105,18 @@ console.log(userToken)
               `${
                 isActive
                   ? "bg-[#337E66] text-[#FFFFFF]"
-                  : "bg-transparent border-2 border-[#337E66] text-[#337E66]"
+                  : "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
               } rounded-[15px] font-bold text-[16px] px-[20px] lg:px-[31.5px] py-[7px]`
             }
           >
             SIGN UP
           </NavLink>}
-          {showSignout &&<NavLink
-            to="signup"
-            className={({ isActive }) =>
-              `${
-                isActive
-                  ? "bg-[#337E66] text-[#FFFFFF]"
-                  : "bg-transparent border-2 border-[#337E66] text-[#337E66]"
-              } rounded-[15px] font-bold text-[16px] px-[20px] lg:px-[31.5px] py-[7px]`
-            }
+          {showSignout &&<div
+            className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+            onClick={handleSignout}
           >
-            SIGN UP
-          </NavLink>}
+            SIGN OUT
+          </div>}
         </div>
       </div>
 
@@ -141,25 +139,31 @@ console.log(userToken)
               to={to}
               className={({ isActive }) =>
                 isActive
-                  ? "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[31.5px] py-[7px]"
+                  ? "border-b-2 border-[#337E66] w-fit"
                   : ""
               }
             >
               <li>{label}</li>
             </NavLink>
           ))}
-          <NavLink
+          {showSignup && <NavLink
             to="signup"
             className={({ isActive }) =>
               `${
                 isActive
                   ? "bg-[#337E66] text-[#FFFFFF]"
-                  : "bg-transparent border-2 border-[#337E66] text-[#337E66]"
+                  : "w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
               } rounded-[15px] font-bold text-[16px] px-[31.5px] py-[7px]`
             }
           >
             SIGN UP
-          </NavLink>
+          </NavLink>}
+          {showSignout && <div
+            className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+            onClick={handleSignout}
+          >
+            SIGN OUT
+          </div>}
         </ul>
       </div>
     </nav>

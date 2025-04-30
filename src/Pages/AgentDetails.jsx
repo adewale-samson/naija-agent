@@ -47,7 +47,7 @@ const AgentDetails = () => {
   };
 
   return (
-    <div className="font-mont px-4 sm:px-6 py-[24px] max-w-4xl mx-auto">
+    <div className="font-mont bg-[#FAFAFA] px-4 sm:px-6 py-[24px] max-w-4xl mx-auto">
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
@@ -93,7 +93,7 @@ const AgentDetails = () => {
                   href={agent.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
+                  className="text-[#337E66] hover:underline"
                 >
                   Instagram Profile
                 </a>
@@ -120,12 +120,12 @@ const AgentDetails = () => {
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="w-full p-3 border rounded-lg mb-4 min-h-[120px]"
+            className="w-full p-3 border border-[#EAEAEA] rounded-lg mb-4 min-h-[120px] "
             placeholder="Write your comment here..."
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-[#337E66] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
             Submit Comment
           </button>
@@ -137,7 +137,7 @@ const AgentDetails = () => {
         <h2 className="text-xl font-bold mb-4">Comments</h2>
         <div className="space-y-4">
           {comments.map((comment) => (
-            <div key={comment.id} className="border-b last:border-b-0 pb-4">
+            <div key={comment.id} className="border-b border-[#EAEAEA] last:border-b-0 pb-4">
               <div className="flex justify-between items-center mb-2">
                 <span className="font-semibold">{comment.user}</span>
                 <span className="text-gray-500 text-sm">{comment.date}</span>

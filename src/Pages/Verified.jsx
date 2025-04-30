@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import Verify from '../assets/verify.svg'
 import Loader from '../assets/loader.gif'
 import { verifyEmail } from '../api/auth';
+import { ToastContainer } from 'react-toastify';
 
 const Verified = () => {
     const [token, setToken] = useState(null);
@@ -28,7 +29,9 @@ const Verified = () => {
           // console.log(response)
           // setIsVerified(true);
           setLoader(false);
-        navigate("/login");
+          setTimeout(()=>{
+            navigate("/login");
+          }, 2500)
       })
       .catch((err) => {
         // console.log(err);
@@ -41,6 +44,7 @@ const Verified = () => {
   };
   return (
     <div className="min-h-screen font-mont bg-[#fff] sm:bg-[#B3D3C9] ">
+            <ToastContainer />
         <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
         <Link to="/">
           <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">

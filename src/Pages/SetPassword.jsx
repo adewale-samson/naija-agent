@@ -180,7 +180,7 @@ const SetPassword = () => {
               )}
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
-              Back to
+              Back to 
               <Link to="/login">
                 <span className="text-[#337E66] cursor-pointer">log in</span>
               </Link>
