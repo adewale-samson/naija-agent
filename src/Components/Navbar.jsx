@@ -1,13 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userToken, setUserToken] = useState(null);
+  const [showSignup, setShowSignup] = useState(true)
+  const [showSignout, setShowSignout] = useState(false)
+
+    useEffect(() => {
+      try {
+        const token = Cookies.get("token");
+        if (token) {
+          setUserToken(token);
+          setShowSignup(false)
+          setShowSignout(true)
+        } else {
+        }
+      } catch (error) {
+        // console.error("Error retrieving token:", error);
+      }
+    }, [])
+  useEffect(()=>{
+    if (userToken) {
+      setShowSignup(false)
+      setShowSignout(true)  
+    } else {
+      setShowSignup(true)
+      setShowSignout(false)
+    }
+
+  },[userToken])
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
+console.log(showSignout)
+console.log(showSignup)
+console.log(userToken)
   return (
     <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[40px] py-[30px]">
       <div className="flex justify-between items-center">
@@ -49,9 +78,9 @@ const Navbar = () => {
             {[
               { to: "/", label: "Home" },
               { to: "/about", label: "ABOUT US" },
-              { to: "/abuja", label: "ABUJA" },
-              { to: "/lagos", label: "LAGOS" },
-              { to: "/others", label: "OTHERS" },
+              { to: "/location/abuja", label: "ABUJA" },
+              { to: "/location/lagos", label: "LAGOS" },
+              { to: "/location/others", label: "OTHERS" },
             ].map(({ to, label }) => (
               <NavLink
                 key={label}
@@ -66,7 +95,7 @@ const Navbar = () => {
               </NavLink>
             ))}
           </ul>
-          <NavLink
+          {showSignup &&<NavLink
             to="signup"
             className={({ isActive }) =>
               `${
@@ -77,7 +106,19 @@ const Navbar = () => {
             }
           >
             SIGN UP
-          </NavLink>
+          </NavLink>}
+          {showSignout &&<NavLink
+            to="signup"
+            className={({ isActive }) =>
+              `${
+                isActive
+                  ? "bg-[#337E66] text-[#FFFFFF]"
+                  : "bg-transparent border-2 border-[#337E66] text-[#337E66]"
+              } rounded-[15px] font-bold text-[16px] px-[20px] lg:px-[31.5px] py-[7px]`
+            }
+          >
+            SIGN UP
+          </NavLink>}
         </div>
       </div>
 

@@ -11,7 +11,10 @@ import AgentForm from "./Pages/AgentForm";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Verify from "./Pages/Verify";
 import Verified from "./Pages/Verified";
-
+import AgentDetails from "./Pages/AgentDetails";
+import ForgotPassword from "./Pages/ForgotPassword";
+import ResetNotification from "./Pages/ResetNotification";
+import SetPassword from "./Pages/SetPassword";
 
 function App() {
   return (
@@ -22,22 +25,26 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path="about" element={<About />} />
           <Route path="trending" element={<Trending />} />
-          <Route path=":cityName" element={<CityPage />} />
+          <Route path="location/:cityName" element={<CityPage />} />
         </Route>
 
         {/* Authentication routes without Header and Footer */}
-          <Route
-            path="agentform"
-            element={
-              <ProtectedRoute>
-                <AgentForm />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          path="agentform"
+          element={
+            <ProtectedRoute>
+              <AgentForm />
+            </ProtectedRoute>
+          }
+        />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="verify" element={<Verify />} />
         <Route path="verified" element={<Verified />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/reset-success" element={<ResetNotification />} />
+        <Route path="/set-password" element={<SetPassword />} />
+        <Route path="/agent/:id" element={<AgentDetails />} />
       </Routes>
     </div>
   );
