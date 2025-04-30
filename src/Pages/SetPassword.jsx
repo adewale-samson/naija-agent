@@ -6,57 +6,63 @@ import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import Spinner from "../assets/loader.gif";
-import { LoginAuth } from "../api/auth";
-import Cookies from 'js-cookie'
-
+import { resetPassword } from "../api/auth";
+import Cookies from "js-cookie";
 
 const initialValues = {
-  email: "",
-  password: "",
+  newPassword: "",
+  confirmPassword: "",
 };
 
-const Login = () => {
+const SetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
   const toggleVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+  const toggleConfirmVisibility = () => {
+    setShowConfirmPassword((prev) => !prev);
+  };
   const schema = yup.object({
-    email: yup
+    newPassword: yup.string().required("Password is required").min(8).matches(
+        /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        "Password must contain at least one uppercase letter, one number and one special character"
+      ),
+    confirmPassword: yup
       .string()
-      .email("Please enter a valid email")
-      .required("Email is required"),
-    password: yup.string().required("Password is required"),
+      .required("Confirm password is required")
+      .min(8)
+      .oneOf([yup.ref('newPassword')], 'Passwords must match')
+      
   });
 
   const onSubmit = async (values, actions) => {
     try {
-          console.log(values)
-          setLoader(true); 
-          await LoginAuth(values)
-          .then(res => {
-            // console.log(res)
-            Cookies.set('token', res.data.token, { expires: 1 });
-            toast.success("Login successful!");
-            actions.resetForm();
-            setTimeout(() => {
-              navigate('/agentform');
-            }, 2500);
-          })
-          .catch(err => {
-            // console.log(err)
-            toast.error(err?.response?.data?.message || "Something went wrong!");
-          })
-          
-        } catch (error) {
-          toast.error("Failed to create account. Please try again.");
-          // console.error("Signup error:", error);
-        } finally {
-          setLoader(false);
-          actions.setSubmitting(false);
-        }
+      console.log(values);
+      setLoader(true);
+      await resetPassword(values)
+        .then((res) => {
+          // console.log(res)
+          toast.success("Reset successful!");
+          actions.resetForm();
+          setTimeout(() => {
+            navigate("/login");
+          }, 2500);
+        })
+        .catch((err) => {
+          // console.log(err)
+          toast.error(err?.response?.data?.message || "Something went wrong!");
+        });
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.");
+      // console.error("Signup error:", error);
+    } finally {
+      setLoader(false);
+      actions.setSubmitting(false);
+    }
   };
 
   const {
@@ -85,60 +91,32 @@ const Login = () => {
       <section className="font-mont py-[0px] sm:py-[30px]">
         <div className="w-[100%] sm:w-[616px] bg-[#fff] p-[16px] sm:p-[32px] rounded-[8px] mx-auto py-5">
           <h1 className="text-[32px] font-medium leading-[41.6px] text-[#2A2A2A] mb-2 mt-8 text-center ">
-            Login
+            Set new password
           </h1>
           <p className="font-regular text-[16px] leading-[20.8px] text-[#828282] mb-[32px] text-center">
-            Provide your login details.
+            Provide your details.
           </p>
           <form className="text-[#333] font-regular" onSubmit={handleSubmit}>
-            <div className="mb-6 sm:mb-4">
-              <label
-                htmlFor="email"
-                className={
-                  errors.email && touched.email
-                    ? "text-[#fc8181] block mb-2"
-                    : "block mb-2 "
-                }
-              >
-                {errors.email && touched.email
-                  ? `${errors.email}`
-                  : "Email Address"}
-              </label>
-              <input
-                type="text"
-                id="email"
-                placeholder="Enter email address"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
-              />
-            </div>
             <div className="relative my-4 sm:my-6">
               <div className="flex justify-between">
                 <label
-                  htmlFor="password"
+                  htmlFor="newPassword"
                   className={
-                    errors.password && touched.password
+                    errors.newPassword && touched.newPassword
                       ? "text-[#fc8181] block mb-2"
                       : "block mb-2 "
                   }
                 >
-                  {errors.password && touched.password
-                    ? `${errors.password}`
-                    : "Password"}
+                  {errors.newPassword && touched.newPassword
+                    ? `${errors.newPassword}`
+                    : "New password"}
                 </label>
-                <Link to="/forgot">
-                  <p className="font-medium text-[14px] leading-[16.94px] text-[#FF5959] block">
-                    Forgot Password
-                  </p>
-                </Link>
               </div>
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
-                placeholder="Enter Password"
-                value={values.password}
+                id="newPassword"
+                placeholder="Enter new Password"
+                value={values.newPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
@@ -148,6 +126,41 @@ const Login = () => {
                 onClick={toggleVisibility}
               >
                 {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+              </div>
+            </div>
+            <div className="relative my-4 sm:my-6">
+              <div className="flex justify-between">
+                <label
+                  htmlFor="confirmPassword"
+                  className={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? "text-[#fc8181] block mb-2"
+                      : "block mb-2 "
+                  }
+                >
+                  {errors.confirmPassword && touched.confirmPassword
+                    ? `${errors.confirmPassword}`
+                    : "Password"}
+                </label>
+              </div>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                placeholder="Enter Password"
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
+              />
+              <div
+                className="absolute right-[10px] top-[60%] cursor-pointer"
+                onClick={toggleConfirmVisibility}
+              >
+                {showConfirmPassword ? (
+                  <AiOutlineEye />
+                ) : (
+                  <AiOutlineEyeInvisible />
+                )}
               </div>
             </div>
             <button
@@ -163,13 +176,13 @@ const Login = () => {
                   className="mx-auto"
                 />
               ) : (
-                "Login"
+                "Reset password"
               )}
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
-              Don't have an account ?{" "}
-              <Link to="/signup">
-                <span className="text-[#337E66] cursor-pointer">Sign up</span>
+              Back to
+              <Link to="/login">
+                <span className="text-[#337E66] cursor-pointer">log in</span>
               </Link>
             </p>
           </form>
@@ -179,4 +192,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SetPassword;

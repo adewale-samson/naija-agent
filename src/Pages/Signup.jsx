@@ -8,6 +8,7 @@ import { useSignup } from '../hooks/useSignup';
 import * as yup from 'yup'
 import Spinner from '../assets/loader.gif'
 import { SignupAuth } from '../api/auth';
+import Cookies from 'js-cookie'
 
 
 const initialValues = {
@@ -16,6 +17,7 @@ const initialValues = {
   phone: "",
   address: '',
   instagram: '',
+  state: '',
   password: "",
   // checkbox: false,
 };
@@ -39,6 +41,7 @@ const Signup = () => {
       .required("Email is required"),
     name: yup.string().required("Full name is required"),
     address: yup.string().required("Address is required"),
+    state: yup.string().required("State is required"),
     instagram: yup
     .string()
     .required("Instagram url is required")
@@ -69,11 +72,13 @@ const Signup = () => {
       setLoader(true); 
       await SignupAuth(values)
       .then(res => {
-        // console.log(res)
+        console.log(res)
+        Cookies.set('name', res.data.response.name, { expires: 1 });
+        Cookies.set('email', getFirstName(res.data.response.email), { expires: 1 });
         toast.success("Account created successfully!");
         actions.resetForm();
         setTimeout(()=>{
-          navigate('/login');
+          navigate('/verify');
         }, 2500)
       })
       .catch(err => {
@@ -104,11 +109,18 @@ const Signup = () => {
     validationSchema: schema,
     onSubmit,
   });
-  // console.log(errors)
+
+  function getFirstName(fullName) {
+    if (!fullName) return '';
+    
+    const parts = fullName.trim().split(' ');
+    return parts[0];
+  }
+  
   return (
-    <div className="min-h-screen  bg-[#B3D3C9] xm:bg-[#fff]">
+    <div className="min-h-screen  bg-[#fff] sm:bg-[#B3D3C9]">
       <ToastContainer />
-      <div className="bg-[#fff] border-b-[1px] xm:border-b-[0px] border-b-[#337E66]">
+      <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
         <Link to="/">
           <h1 className='font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]'>RentIt</h1>
         </Link>
@@ -215,6 +227,29 @@ const Signup = () => {
                 />
             </div>
             <div className="mb-6 sm:mb-4">
+            <label
+                  htmlFor="state"
+                  className={
+                    errors.state && touched.state
+                      ? "text-[#fc8181] block mb-2"
+                      : "block mb-2"
+                  }
+                >
+                  {errors.state && touched.state
+                    ? `${errors.state}`
+                    : "State"}
+                </label>
+                <input
+                  type="text"
+                  id="state"
+                  placeholder="Enter State"
+                  value={values.state}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "
+                />
+            </div>
+            <div className="mb-6 sm:mb-4">
                 <label
                   htmlFor="instagram"
                   className={
@@ -307,7 +342,7 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className=" font-medium bg-[#337E66] rounded-[4px] py-3 w-[100%] border-[0.3px] border-[#654DE4] text-[#fff] text-[16px] tracking-[3%] leading-[24px] cursor-pointer"
+              className=" font-medium bg-[#337E66] rounded-[4px] py-3 w-[100%] border-[0] text-[#fff] text-[16px] tracking-[3%] leading-[24px] cursor-pointer"
             >
               {loader ? (
                 <img
