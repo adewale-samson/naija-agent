@@ -28,7 +28,7 @@ const AgentDetails = () => {
   useEffect(()=> {
       getAgentById(id)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         setAgent(res.data.data)
       })
       .catch(err => {

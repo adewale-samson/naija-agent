@@ -124,7 +124,7 @@ const Navbar = () => {
       <div
         className={`${
           isOpen ? "block" : "hidden"
-        } md:hidden absolute top-[100%] left-0 right-0 bg-white shadow-lg`}
+        } md:hidden absolute top-[100%] left-0 right-0 bg-white shadow-lg z-100`}
       >
         <ul className="flex flex-col py-4 px-4 gap-4 font-medium text-[16px] leading-[100%] tracking-[0%]">
           {[
