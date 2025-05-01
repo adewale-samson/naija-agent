@@ -45,7 +45,7 @@ const Hero = () => {
 
           {/* Buttons */}
           <div className="flex flex-wrap gap-4">
-            <button className="w-[178px] bg-[#337E66] text-[#fff] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#006a50] transition">
+            <button className="w-[178px] bg-[#337E66] text-[#fff] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#006a50] transition" onClick={()=>navigate('/trending')}>
               Search here
             </button>
             {showSignup && (
