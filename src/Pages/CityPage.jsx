@@ -2,7 +2,8 @@ import { useNavigate, useParams } from "react-router";
 import Girl from "../assets/city-img.png";
 import { useEffect, useState } from "react";
 import { getLocationData } from "../api/data";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import { motion } from "framer-motion";
 
 const CityPage = () => {
   const navigate = useNavigate();
@@ -20,19 +21,19 @@ const CityPage = () => {
     } catch (error) {
       // console.error("Error retrieving token:", error);
     }
-  }, [])
-  useEffect(()=> {  
+  }, []);
+  useEffect(() => {
     // console.log(userToken)
     // console.log(cityName)
     getLocationData(cityName, userToken)
-    .then(res => {
-      console.log(res)
-      setLocationData(res.data.data)
-    })
-    .catch(err => {
-      // console.log(err)
-    })
-  },[userToken, cityName])
+      .then((res) => {
+        // console.log(res)
+        setLocationData(res.data.data);
+      })
+      .catch((err) => {
+        // console.log(err)
+      });
+  }, [userToken, cityName]);
   // console.log(userToken)
   // const locationData = [
   //   {
@@ -78,10 +79,21 @@ const CityPage = () => {
   };
 
   return (
-    <section className="font-mont px-4 sm:px-6 py-[24px]">
-      <div className="min-h-[1000px]"> 
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="font-mont px-4 sm:px-6 py-[24px]"
+    >
+      <div className="min-h-[1000px]">
         {locationData.map((data, index, arr) => (
-          <div key={data._id} className={`flex items-center justify-between px-[8px] sm:px-[25px] py-[20px] border border-[#00000038] rounded-[20px] ${arr.length - 1 === index ? 'mb-[0px]': 'mb-[16px]'}`}>
+          <div
+            key={data._id}
+            className={`flex items-center justify-between px-[8px] sm:px-[25px] py-[20px] border border-[#00000038] rounded-[20px] ${
+              arr.length - 1 === index ? "mb-[0px]" : "mb-[16px]"
+            }`}
+          >
             <div className="w-fit">
               <div className="w-[88px] h-[88px] overflow-hidden rounded-[50%]">
                 <img src={data.image} className="w-full h-full object-cover" />
@@ -117,13 +129,16 @@ const CityPage = () => {
                 OVER {data.totalDeals}
               </p>
             </div>
-            <button onClick={() => handleSeeMore(data?._id)} className="w-[100px] sm:w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[16px] leading-[150%] tracking-[0] rounded-[15px]">
+            <button
+              onClick={() => handleSeeMore(data?._id)}
+              className="w-[100px] sm:w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[16px] leading-[150%] tracking-[0] rounded-[15px]"
+            >
               See More
             </button>
           </div>
         ))}
       </div>
-    </section>
+    </motion.div>
   );
 };
 

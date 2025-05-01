@@ -3,10 +3,18 @@ import Meet from "../assets/about-meet.png";
 import Woman from "../assets/woman-key.png";
 import Women from "../assets/women-meeting.png";
 import Room from "../assets/room.png";
+import { motion } from "framer-motion";
 
 const About = () => {
+  
   return (
-    <section className="px-4 sm:px-6 md:px-[48px]">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="px-4 sm:px-6 md:px-[48px]"
+    >
       <h1 className="font-montagu text-[40px] text-center leading-[100%] tracking-[0%] py-[40px]">
         ABOUT US
       </h1>
@@ -95,7 +103,7 @@ const About = () => {
           </div>
         </div>
       </section>
-    </section>
+    </motion.div>
   );
 };
 
