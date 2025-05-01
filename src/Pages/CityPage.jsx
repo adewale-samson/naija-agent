@@ -9,6 +9,7 @@ const CityPage = () => {
   const { cityName } = useParams();
 
   const [userToken, setUserToken] = useState(null);
+  const [locationData, setLocationData] = useState([]);
   useEffect(() => {
     try {
       const token = Cookies.get("token");
@@ -21,53 +22,56 @@ const CityPage = () => {
     }
   }, [])
   useEffect(()=> {  
-    getLocationData({name: cityName}, userToken)
+    // console.log(userToken)
+    // console.log(cityName)
+    getLocationData(cityName, userToken)
     .then(res => {
       console.log(res)
+      setLocationData(res.data.data)
     })
     .catch(err => {
-      console.log(err)
+      // console.log(err)
     })
   },[userToken, cityName])
-  console.log(userToken)
-  const locationData = [
-    {
-      id: 1,
-      image: Girl,
-      name: "Bamidele Ayeni",
-      location: cityName.toUpperCase(),
-      fee: "10000",
-      closedDeal: 100,
-    },
-    {
-      image: Girl,
-      name: "Tolani Alex",
-      location: cityName.toUpperCase(),
-      fee: "5000",
-      closedDeal: 100,
-    },
-    {
-      image: Girl,
-      name: "Cassie",
-      location: cityName.toUpperCase(),
-      fee: "10000",
-      closedDeal: 100,
-    },
-    {
-      image: Girl,
-      name: "Marie John",
-      location: cityName.toUpperCase(),
-      fee: "10000",
-      closedDeal: 100,
-    },
-    {
-      image: Girl,
-      name: "Sands&Crystals",
-      location: cityName.toUpperCase(),
-      fee: "10000",
-      closedDeal: 100,
-    },
-  ];
+  // console.log(userToken)
+  // const locationData = [
+  //   {
+  //     id: 1,
+  //     image: Girl,
+  //     name: "Bamidele Ayeni",
+  //     location: cityName.toUpperCase(),
+  //     fee: "10000",
+  //     closedDeal: 100,
+  //   },
+  //   {
+  //     image: Girl,
+  //     name: "Tolani Alex",
+  //     location: cityName.toUpperCase(),
+  //     fee: "5000",
+  //     closedDeal: 100,
+  //   },
+  //   {
+  //     image: Girl,
+  //     name: "Cassie",
+  //     location: cityName.toUpperCase(),
+  //     fee: "10000",
+  //     closedDeal: 100,
+  //   },
+  //   {
+  //     image: Girl,
+  //     name: "Marie John",
+  //     location: cityName.toUpperCase(),
+  //     fee: "10000",
+  //     closedDeal: 100,
+  //   },
+  //   {
+  //     image: Girl,
+  //     name: "Sands&Crystals",
+  //     location: cityName.toUpperCase(),
+  //     fee: "10000",
+  //     closedDeal: 100,
+  //   },
+  // ];
 
   const handleSeeMore = (agentId) => {
     navigate(`/agent/${agentId}`);
@@ -75,9 +79,9 @@ const CityPage = () => {
 
   return (
     <section className="font-mont px-4 sm:px-6 py-[24px]">
-      <div>
+      <div className="min-h-[1000px]"> 
         {locationData.map((data, index, arr) => (
-          <div className={`flex items-center justify-between px-[8px] sm:px-[25px] py-[20px] border border-[#00000038] rounded-[20px] ${arr.length - 1 === index ? 'mb-[0px]': 'mb-[16px]'}`}>
+          <div key={data._id} className={`flex items-center justify-between px-[8px] sm:px-[25px] py-[20px] border border-[#00000038] rounded-[20px] ${arr.length - 1 === index ? 'mb-[0px]': 'mb-[16px]'}`}>
             <div className="w-fit">
               <div className="w-[88px] h-[88px] overflow-hidden rounded-[50%]">
                 <img src={data.image} className="w-full h-full object-cover" />
@@ -94,7 +98,7 @@ const CityPage = () => {
                 LOCATION
               </h4>
               <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
-                {data.location}
+                {data.state}
               </p>
             </div>
             <div className="hidden sm:block">
@@ -102,7 +106,7 @@ const CityPage = () => {
                 INSPECTION FEE
               </h4>
               <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
-                N{data.fee}
+                N{data.inspectionFee}
               </p>
             </div>
             <div className="hidden lg:block">
@@ -110,10 +114,10 @@ const CityPage = () => {
                 DEALS CLOSED
               </h4>
               <p className="font-[600] text-[16px] text-[#000] leading-[150%] tracking-[0]">
-                OVER {data.closedDeal}
+                OVER {data.totalDeals}
               </p>
             </div>
-            <button onClick={() => handleSeeMore(data?.id)} className="w-[100px] sm:w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[16px] leading-[150%] tracking-[0] rounded-[15px]">
+            <button onClick={() => handleSeeMore(data?._id)} className="w-[100px] sm:w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[16px] leading-[150%] tracking-[0] rounded-[15px]">
               See More
             </button>
           </div>

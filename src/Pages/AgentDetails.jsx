@@ -1,10 +1,14 @@
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { getAgentById, postComment } from "../api/data";
+import { toast } from "react-toastify";
 
 const AgentDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [agent, setAgent] = useState({})
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([
     {
@@ -20,20 +24,38 @@ const AgentDetails = () => {
       date: "2025-04-29",
     },
   ]);
-
+  
+  useEffect(()=> {
+      getAgentById(id)
+      .then(res => {
+        console.log(res)
+        setAgent(res.data.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [])
   // Mock agent data
-  const agent = {
-    name: "Sarah Johnson",
-    image: "https://placeholder.com/150",
-    about:
-      "Experienced real estate agent with 10 years in the industry. Specialized in luxury properties and commercial real estate.",
-    instagram: "https://instagram.com/sarahjohnson",
-    phone: "+234 801 234 5678",
-  };
-
+  // const agent = {
+  //   name: "Sarah Johnson",
+  //   image: "https://placeholder.com/150",
+  //   about:
+  //   "Experienced real estate agent with 10 years in the industry. Specialized in luxury properties and commercial real estate.",
+  //   instagram: "https://instagram.com/sarahjohnson",
+  //   phone: "+234 801 234 5678",
+  // };
+  
   const handleSubmitComment = (e) => {
     e.preventDefault();
     if (!comment.trim()) return;
+    postComment(comment)
+    .then(res => {
+      // console.log(res)
+      toast.success('Comment posted successfully')
+    })
+    .catch(err => {
+      console.log(err)
+    })
 
     const newComment = {
       id: comments.length + 1,

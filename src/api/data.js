@@ -9,11 +9,24 @@ export const handleAgentForm = (data, token) => {
     })
 }
 export const getLocationData = (location, token) => {
-    console.table(token, location)
     return axiosInstance.get(`/api/v1/user/location/${location}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // }
+    })
+}
+export const searchLocationData = (location) => {
+    return axiosInstance.get(`/api/v1/user/location/${location}`, {
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // }
+    })
+}
+export const getAgentById = (id) => {
+    return axiosInstance.get(`/api/v1/user/${id}`, {
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // }
     })
 }
 export const postComment = (data) => {
