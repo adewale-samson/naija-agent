@@ -15,10 +15,11 @@ import AgentDetails from "./Pages/AgentDetails";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetNotification from "./Pages/ResetNotification";
 import SetPassword from "./Pages/SetPassword";
+import Layout from "./layouts/FramerLayout";
 
 function App() {
   return (
-    <div className="app-container">
+    <Layout className="app-container">
       <Routes>
         {/* Routes with Header and Footer */}
         <Route element={<RootLayout />}>
@@ -46,7 +47,7 @@ function App() {
         <Route path="/set-password" element={<SetPassword />} />
         <Route path="/agent/:id" element={<AgentDetails />} />
       </Routes>
-    </div>
+    </Layout>
   );
 }
 
