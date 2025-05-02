@@ -113,11 +113,11 @@ const AgentForm = () => {
       const isImage = file.type.startsWith("image/");
       const isUnder5MB = file.size <= 5 * 1024 * 1024;
       if (!isImage) {
-        setAlert("Please select a valid image file.");
+        toast.error("Please select a valid image file.");
         return;
       }
       if (!isUnder5MB) {
-        setAlert("File size should be less than 5MB.");
+        toast.error("File size should be less than 5MB.");
         return;
       }
       setPhoto(file);
@@ -176,7 +176,7 @@ const AgentForm = () => {
                 Add Display Image
               </h2>
               <p className="font-regular text-[16px] text-[#535353] leading-[145%] tracking-[0%] mb-[40px]">
-                Upload a professional headshot that will serve as your display
+                Upload a professional image  that will serve as your display
                 picture
               </p>
               <div className="relative w-full max-w-[283px] aspect-[283/257] bg-[#D9D9D9] border border-[#D9D9D9] rounded-[8px] flex items-center justify-center">
