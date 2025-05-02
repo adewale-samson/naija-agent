@@ -29,19 +29,11 @@ export const getAgentById = (id) => {
         // }
     })
 }
-export const postComment = (data) => {
-    console.log(location)
-    console.log(token)
-    return axiosInstance.get(`/api/v1/comment`, data, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    })
+export const postComment = (data, id) => {
+    console.log(data)
+    console.log(id)
+    return axiosInstance.get(`/api/v1/comment/${id}`, data)
 }
 export const getComments = (token) => {
-    return axiosInstance.get(`/api/v1/comment/getAll`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    })
+    return axiosInstance.get(`/api/v1/comment/getAll`)
 }

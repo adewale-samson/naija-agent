@@ -1,15 +1,16 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { getAgentById, postComment } from "../api/data";
+import { getAgentById, getComments, postComment } from "../api/data";
 import { toast } from "react-toastify";
 
 const AgentDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [agent, setAgent] = useState({})
+  const [agent, setAgent] = useState({});
   const [comment, setComment] = useState("");
+  const [userName, setUserName] = useState("");
   const [comments, setComments] = useState([
     {
       id: 1,
@@ -24,17 +25,27 @@ const AgentDetails = () => {
       date: "2025-04-29",
     },
   ]);
-  
-  useEffect(()=> {
-      getAgentById(id)
-      .then(res => {
-        // console.log(res)
-        setAgent(res.data.data)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    getAgentById(id)
+      .then((res) => {
+        console.log(res);
+        setAgent(res.data.data);
       })
-      .catch(err => {
-        console.log(err)
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    getComments()
+      .then((res) => {
+        console.log(res);
       })
-  }, [])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   // Mock agent data
   // const agent = {
   //   name: "Sarah Johnson",
@@ -44,28 +55,40 @@ const AgentDetails = () => {
   //   instagram: "https://instagram.com/sarahjohnson",
   //   phone: "+234 801 234 5678",
   // };
-  
+
   const handleSubmitComment = (e) => {
     e.preventDefault();
-    if (!comment.trim()) return;
-    postComment(comment)
-    .then(res => {
-      // console.log(res)
-      toast.success('Comment posted successfully')
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    if (!comment.trim() || !userName.trim()) return;
 
-    const newComment = {
-      id: comments.length + 1,
-      user: "Current User", // This should be replaced with actual user data
-      text: comment,
-      date: new Date().toISOString().split("T")[0],
-    };
+    setIsSubmitting(true);
+    const currentDate = new Date().toISOString().split("T")[0];
+    const newValue = {
+      fullName: userName,
+      content: comment
+    }
+    
+    postComment(newValue, id)
+      .then((res) => {
+        toast.success("Comment posted successfully");
 
-    setComments([...comments, newComment]);
-    setComment("");
+        const newComment = {
+          id: comments.length + 1,
+          user: userName,
+          text: comment,
+          date: currentDate,
+        };
+
+        setComments([...comments, newComment]);
+        setComment("");
+        setUserName("");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to post comment");
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -101,7 +124,7 @@ const AgentDetails = () => {
           />
           <div className="flex-1">
             <h1 className="text-3xl font-bold mb-4">{agent.name}</h1>
-            <p className="text-gray-600 mb-4">{agent.about}</p>
+            <p className="text-gray-600 mb-4">{agent.bio}</p>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <svg
@@ -130,6 +153,53 @@ const AgentDetails = () => {
                 </svg>
                 <span>{agent.phone}</span>
               </div>
+              <div className="flex items-center gap-2">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <span>{agent.email}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12.0002 0C5.37024 0 0.000244141 5.37 0.000244141 12C0.000244141 18.63 5.37024 24 12.0002 24C18.6302 24 24.0002 18.63 24.0002 12C24.0002 5.37 18.6302 0 12.0002 0ZM15.8502 14.63C15.7202 14.88 15.5902 15.12 15.4502 15.34C14.7202 16.42 13.9402 17.46 13.1202 18.46C12.7902 18.88 12.4002 19.18 11.9702 19.31C11.5402 19.44 11.0002 19.34 10.6302 19.06C10.2802 18.8 10.0002 18.43 9.81024 18.02C9.59024 17.54 9.45024 17.02 9.31024 16.5C8.91024 14.85 8.51024 13.2 8.11024 11.54C8.09024 11.46 8.07024 11.38 8.05024 11.3C7.99024 11.08 7.90024 10.86 7.77024 10.67C7.63024 10.47 7.44024 10.32 7.22024 10.23C7.17024 10.21 7.13024 10.19 7.08024 10.16C7.06024 10.15 6.97024 10.12 7.00024 10.09C7.03024 10.06 7.09024 10.06 7.12024 10.05C7.31024 10.03 7.50024 10.03 7.70024 10.05C8.00024 10.1 8.28024 10.21 8.53024 10.38C8.80024 10.56 9.03024 10.8 9.21024 11.07C9.40024 11.36 9.54024 11.68 9.67024 12C9.81024 12.36 9.94024 12.73 10.0702 13.09C10.4102 14.05 10.7602 15.01 11.1002 15.97C11.2502 16.4 11.4002 16.83 11.7002 17.18C11.9402 17.46 12.2902 17.66 12.6602 17.66C13.0302 17.66 13.3502 17.47 13.6102 17.22C14.0302 16.82 14.4002 16.38 14.7602 15.93C15.1402 15.44 15.4902 14.93 15.8502 14.43C15.9202 14.33 15.9102 14.53 15.8502 14.63ZM12.0002 7.45C12.5802 7.45 13.1502 7.62 13.6302 7.94C14.1102 8.26 14.4802 8.71 14.6902 9.24C14.9002 9.77 14.9402 10.35 14.8002 10.91C14.6602 11.47 14.3502 11.97 13.9202 12.36C13.2702 12.94 12.4002 13.23 11.5402 13.13C11.1302 13.08 10.7402 12.93 10.4002 12.71C10.0602 12.49 9.77024 12.2 9.55024 11.85C9.33024 11.5 9.18024 11.11 9.12024 10.7C9.05024 10.23 9.10024 9.75 9.27024 9.31C9.44024 8.87 9.72024 8.48 10.0802 8.18C10.4402 7.88 10.8702 7.66 11.3302 7.55C11.5502 7.49 11.7802 7.45 12.0002 7.45Z" />
+                </svg>
+                <span>
+                  {agent.airbnb ? "Available on Airbnb" : "Not on Airbnb"}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <p className="text-sm text-gray-500">Inspection Fee</p>
+                  <p className="text-lg font-semibold">
+                    ₦{agent.inspectionFee?.toLocaleString() || "0"}
+                  </p>
+                </div>
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <p className="text-sm text-gray-500">Total Deals</p>
+                  <p className="text-lg font-semibold">
+                    {agent.totalDeals || 0}
+                  </p>
+                </div>
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <p className="text-sm text-gray-500">Sales</p>
+                  <p className="text-lg font-semibold">
+                    ₦{agent.sales?.toLocaleString() || "0"}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -139,17 +209,27 @@ const AgentDetails = () => {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-xl font-bold mb-4">Leave a Comment</h2>
         <form onSubmit={handleSubmitComment}>
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            className="w-full p-3 border border-[#EAEAEA] rounded-lg mb-4"
+            placeholder="Your name"
+            required
+          />
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="w-full p-3 border border-[#EAEAEA] rounded-lg mb-4 min-h-[120px] "
+            className="w-full p-3 border border-[#EAEAEA] rounded-lg mb-4 min-h-[120px]"
             placeholder="Write your comment here..."
+            required
           />
           <button
             type="submit"
-            className="bg-[#337E66] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            disabled={isSubmitting}
+            className="bg-[#337E66] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Comment
+            {isSubmitting ? "Submitting..." : "Submit Comment"}
           </button>
         </form>
       </div>
@@ -159,7 +239,10 @@ const AgentDetails = () => {
         <h2 className="text-xl font-bold mb-4">Comments</h2>
         <div className="space-y-4">
           {comments.map((comment) => (
-            <div key={comment.id} className="border-b border-[#EAEAEA] last:border-b-0 pb-4">
+            <div
+              key={comment.id}
+              className="border-b border-[#EAEAEA] last:border-b-0 pb-4"
+            >
               <div className="flex justify-between items-center mb-2">
                 <span className="font-semibold">{comment.user}</span>
                 <span className="text-gray-500 text-sm">{comment.date}</span>
