@@ -19,7 +19,8 @@ import Layout from "./layouts/FramerLayout";
 
 function App() {
   return (
-    <Layout className="app-container">
+    <Layout>
+      <div className="app-container">
       <Routes>
         {/* Routes with Header and Footer */}
         <Route element={<RootLayout />}>
@@ -47,6 +48,7 @@ function App() {
         <Route path="/set-password" element={<SetPassword />} />
         <Route path="/agent/:id" element={<AgentDetails />} />
       </Routes>
+      </div>
     </Layout>
   );
 }
