@@ -16,6 +16,7 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import ResetNotification from "./Pages/ResetNotification";
 import SetPassword from "./Pages/SetPassword";
 import Layout from "./layouts/FramerLayout";
+import Dashboard from "./Pages/Dashboard";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="verify" element={<Verify />} />

@@ -39,11 +39,12 @@ const Login = () => {
           .then(res => {
             // console.log(res)
             Cookies.set('token', res.data.token, { expires: 1 });
+            Cookies.set('id', res.data.data.user._id, { expires: 1 });
             toast.success("Login successful!");
             actions.resetForm();
             setTimeout(() => {
               if(res.data.data.user.image){
-                navigate('/')
+                navigate('/dashboard')
               } else {
                 navigate('/agentform')
               }
