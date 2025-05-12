@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getAgentById, getComments, postComment } from "../api/data";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const AgentDetails = () => {
   const { id } = useParams();
@@ -63,13 +63,14 @@ const AgentDetails = () => {
     setIsSubmitting(true);
     const currentDate = new Date().toISOString().split("T")[0];
     const newValue = {
-      fullName: userName,
+      fullname: userName,
       content: comment
     }
     
     postComment(newValue, id)
       .then((res) => {
-        toast.success("Comment posted successfully");
+        toast.success(res.data.message);
+        // console.log(res)
 
         const newComment = {
           id: comments.length + 1,
@@ -93,6 +94,7 @@ const AgentDetails = () => {
 
   return (
     <div className="font-mont bg-[#FAFAFA] px-4 sm:px-6 py-[24px] max-w-4xl mx-auto">
+      <ToastContainer />
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}

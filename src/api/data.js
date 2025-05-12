@@ -32,7 +32,7 @@ export const getAgentById = (id) => {
 export const postComment = (data, id) => {
     console.log(data)
     console.log(id)
-    return axiosInstance.get(`/api/v1/comment/${id}`, data)
+    return axiosInstance.post(`/api/v1/comment/${id}`, data)
 }
 export const getComments = (token) => {
     return axiosInstance.get(`/api/v1/comment/getAll`)
