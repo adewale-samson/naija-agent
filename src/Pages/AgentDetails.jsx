@@ -11,57 +11,36 @@ const AgentDetails = () => {
   const [agent, setAgent] = useState({});
   const [comment, setComment] = useState("");
   const [userName, setUserName] = useState("");
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      user: "John Doe",
-      text: "Great agent to work with!",
-      date: "2025-04-28",
-    },
-    {
-      id: 2,
-      user: "Jane Smith",
-      text: "Very professional service.",
-      date: "2025-04-29",
-    },
-  ]);
+  const [comments, setComments] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     getAgentById(id)
       .then((res) => {
-        console.log(res);
+        // console.log(res.data.data);
         setAgent(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   useEffect(() => {
-    getComments()
+    getComments(id)
       .then((res) => {
-        console.log(res);
+        // console.log(res.data.data.comments)
+        setComments(res.data.data.comments);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  // Mock agent data
-  // const agent = {
-  //   name: "Sarah Johnson",
-  //   image: "https://placeholder.com/150",
-  //   about:
-  //   "Experienced real estate agent with 10 years in the industry. Specialized in luxury properties and commercial real estate.",
-  //   instagram: "https://instagram.com/sarahjohnson",
-  //   phone: "+234 801 234 5678",
-  // };
 
   const handleSubmitComment = (e) => {
     e.preventDefault();
     if (!comment.trim() || !userName.trim()) return;
 
     setIsSubmitting(true);
-    const currentDate = new Date().toISOString().split("T")[0];
+    // const currentDate = new Date().toISOString().split("T")[0];
     const newValue = {
       fullname: userName,
       content: comment
@@ -70,21 +49,11 @@ const AgentDetails = () => {
     postComment(newValue, id)
       .then((res) => {
         toast.success(res.data.message);
-        // console.log(res)
-
-        const newComment = {
-          id: comments.length + 1,
-          user: userName,
-          text: comment,
-          date: currentDate,
-        };
-
-        setComments([...comments, newComment]);
         setComment("");
         setUserName("");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         toast.error("Failed to post comment");
       })
       .finally(() => {
@@ -148,12 +117,23 @@ const AgentDetails = () => {
               <div className="flex items-center gap-2">
                 <svg
                   className="w-5 h-5"
-                  fill="currentColor"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
                 </svg>
-                <span>{agent.phone}</span>
+                <a
+                  href={`tel:${agent.phone}`}
+                  className="hover:text-[#337E66] hover:underline"
+                >
+                  {agent.phone}
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <svg
@@ -168,7 +148,12 @@ const AgentDetails = () => {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <span>{agent.email}</span>
+                <a
+                  href={`mailto:${agent.email}`}
+                  className="hover:text-[#337E66] hover:underline"
+                >
+                  {agent.email}
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <svg
@@ -240,18 +225,38 @@ const AgentDetails = () => {
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-bold mb-4">Comments</h2>
         <div className="space-y-4">
-          {comments.map((comment) => (
-            <div
-              key={comment.id}
-              className="border-b border-[#EAEAEA] last:border-b-0 pb-4"
-            >
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-semibold">{comment.user}</span>
-                <span className="text-gray-500 text-sm">{comment.date}</span>
-              </div>
-              <p className="text-gray-600">{comment.text}</p>
+          {comments.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <svg
+                className="w-16 h-16 mx-auto mb-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
+              <p>No comments yet. Be the first to leave a comment!</p>
             </div>
-          ))}
+          ) : (
+            comments.map((comment, index) => (
+              <div
+                key={index}
+                className="border-b border-[#EAEAEA] last:border-b-0 pb-4"
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-semibold">{comment.fullname}</span>
+                  <span className="text-gray-500 text-sm">{comment.updatedAt}</span>
+                </div>
+                <p className="text-gray-600">{comment.content}</p>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

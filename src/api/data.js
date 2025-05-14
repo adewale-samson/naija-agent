@@ -34,6 +34,6 @@ export const postComment = (data, id) => {
     console.log(id)
     return axiosInstance.post(`/api/v1/comment/${id}`, data)
 }
-export const getComments = (token) => {
-    return axiosInstance.get(`/api/v1/comment/getAll`)
+export const getComments = (id) => {
+    return axiosInstance.get(`/api/v1/comment/getAll/${id}`)
 }
