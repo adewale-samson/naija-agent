@@ -11,20 +11,39 @@ import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 
 const navItems = [
-  { label: "Comments", icon: <FaComment className="text-[#337E66]" /> },
   {
+    id: "dashboard",
+    label: "Dashboard",
+    icon: <HiChartPie className="text-[#337E66]" />,
+  },
+  {
+    id: "comments",
+    label: "Comments",
+    icon: <FaComment className="text-[#337E66]" />,
+  },
+  {
+    id: "commissions",
     label: "Commissions",
     icon: <RiShakeHandsFill className="text-[#6778C6]" />,
   },
   {
+    id: "inspection-fees",
     label: "Inspection fees",
     icon: <FaCommentDollar className="text-[#69B399]" />,
   },
-  { label: "Total Rents", icon: <RiBuildingFill className="text-[#00BB91]" /> },
-  { label: "Total Sales", icon: <HiChartPie className="text-[#DEB887]" /> },
+  {
+    id: "total-rents",
+    label: "Total Rents",
+    icon: <RiBuildingFill className="text-[#00BB91]" />,
+  },
+  {
+    id: "total-sales",
+    label: "Total Sales",
+    icon: <HiChartPie className="text-[#DEB887]" />,
+  },
 ];
 
-const Sidebar = ({ agentInfo }) => {
+const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const sidebarRef = useRef(null);
@@ -45,7 +64,7 @@ const Sidebar = ({ agentInfo }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     function handleClickOutside(event) {
       if (
         sidebarRef.current &&
@@ -75,27 +94,34 @@ const Sidebar = ({ agentInfo }) => {
 
   const handleSignout = () => {
     Cookies.remove("token");
-    window.location.href = '/';
+    window.location.href = "/";
+  };
+
+  const handleItemClick = (itemId) => {
+    onItemClick(itemId);
   };
 
   return (
-    // <div
-    //   className={`bg-white border-r border-r-[#fff] min-h-screen p-4 flex flex-col
-    //   ${collapsed ? "w-20" : "w-64"} 
-    //   transition-all duration-500 ease-in-out`}
-    // >
     <div
-    ref={sidebarRef}
-  className={`
+      ref={sidebarRef}
+      className={`
     bg-white border-r border-r-[#fff] min-h-screen p-4 flex flex-col
     ${collapsed ? "w-20" : "w-64"} 
-    ${!collapsed ? "absolute top-0 left-0 z-50 shadow-lg md:relative" : "relative"}
+    ${
+      !collapsed
+        ? "absolute top-0 left-0 z-50 shadow-lg md:relative"
+        : "relative"
+    }
     transition-all duration-500 ease-in-out
   `}
->
+    >
       {/* Top */}
       <div className="flex items-center justify-between mb-8">
-        {!collapsed && <h1 className="text-xl font-bold" onClick={()=>navigate('/')}>RentIt</h1>}
+        {!collapsed && (
+          <h1 className="text-xl font-bold" onClick={() => navigate("/")}>
+            RentIt
+          </h1>
+        )}
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="text-gray-600 md:hidden"
@@ -126,17 +152,30 @@ const Sidebar = ({ agentInfo }) => {
           </div>
         </div>
       </div>
-      {!collapsed && <h3 className=" font-semibold text-[20px] text-center leading-[100%] mb-[42px] tracking-[0]">
-        Welcome, {getFirstName(agentInfo.name)}
-      </h3>}
+      {!collapsed && (
+        <h3 className=" font-semibold text-[20px] text-center leading-[100%] mb-[42px] tracking-[0]">
+          Welcome, {getFirstName(agentInfo.name)}
+        </h3>
+      )}
+      {!collapsed && (
+        <button
+          onClick={() => navigate("/edit-profile")}
+          className="text-[14px] text-blue-600 hover:underline text-center mb-6"
+        >
+          Edit Profile
+        </button>
+      )}
 
       {/* Navigation */}
       <div className="flex flex-col items-center gap-6">
         {navItems.map((item) => (
           <div
-            key={item.label}
+            key={item.id}
+            onClick={() => handleItemClick(item.id)}
             className={`flex items-center text-gray-700 cursor-pointer hover:text-black w-full
-              ${collapsed ? "justify-center" : "justify-center gap-3"}`}
+              ${collapsed ? "justify-center" : "justify-center gap-3"}
+              ${activeItem === item.id ? "bg-gray-100 p-2 rounded-lg" : ""}
+            `}
           >
             <div className="text-xl">{item.icon}</div>
             {!collapsed && (
@@ -154,7 +193,6 @@ const Sidebar = ({ agentInfo }) => {
           className="flex items-center gap-2 text-red-600 mt-6"
           onClick={handleSignout}
         >
-          {/* <div className="text-xl">🚪</div> */}
           <div className="text-xl">
             <BiSolidExit className="text-[#000000]" />
           </div>
