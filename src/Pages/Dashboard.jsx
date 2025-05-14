@@ -5,11 +5,11 @@ import { FaSearch } from "react-icons/fa";
 import Cookies from "js-cookie";
 
 // Import dashboard components
-import Comments from "../components/dashboard/Comments";
-import Commissions from "../components/dashboard/Commissions";
-import InspectionFees from "../components/dashboard/InspectionFees";
-import TotalRents from "../components/dashboard/TotalRents";
-import TotalSales from "../components/dashboard/TotalSales";
+import Comments from "../Components/dashboard/Comments";
+import Commissions from "../Components/dashboard/Commissions";
+import InspectionFees from "../Components/dashboard/InspectionFees";
+import TotalRents from "../Components/dashboard/TotalRents";
+import TotalSales from "../Components/dashboard/TotalSales";
 
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: null },
