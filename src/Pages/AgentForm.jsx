@@ -7,28 +7,35 @@ import * as Yup from "yup";
 import UserIcon from "../assets/user-icon.svg";
 import EditIcon from "../assets/edit-icon2.svg";
 import { handleAgentForm } from "../api/data";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import { nigerianStates } from "../constants/states";
 
 const validationSchema = Yup.object({
   bio: Yup.string()
     .required("About section is required")
     .min(50, "About section must be at least 50 characters"),
   rentPrice: Yup.number()
-    .min(0, "Rents must be a positive number")
+    .min(1, "Rents must be greater than 0")
     .required("Number of rents is required"),
   sales: Yup.number()
-    .min(0, "Sales must be a positive number")
+    .min(1, "Sales must be greater than 0")
     .required("Number of sales is required"),
   airbnb: Yup.number()
-    .min(0, "AirBnB listings must be a positive number")
+    .min(1, "AirBnB listings must be greater than 0")
     .required("Number of AirBnB listings is required"),
-  location: Yup.string().required("State/City is required"),
+  location: Yup.string().required("State is required"),
   inspectionFee: Yup.number()
-    .min(0, "Inspection fee must be a positive number")
+    .min(1, "Inspection fee must be greater than 0")
     .required("Inspection fee is required"),
   totalDeals: Yup.number()
-    .min(0, "Total deals must be a positive number")
+    .min(1, "Total deals must be greater than 0")
     .required("Total deals closed is required"),
+  agreement: Yup.number()
+    .min(1, "Agreement fee must be greater than 0")
+    .required("Agreement is required"),
+  commission: Yup.number()
+    .min(1, "Commission must be greater than 0")
+    .required("Commission is required"),
 });
 
 const AgentForm = () => {
@@ -53,7 +60,7 @@ const AgentForm = () => {
       } else {
       }
     } catch (error) {
-    //   console.error("Error retrieving token:", error);
+      //   console.error("Error retrieving token:", error);
     }
   }, []);
 
@@ -66,9 +73,12 @@ const AgentForm = () => {
       location: "",
       inspectionFee: 0,
       totalDeals: 0,
+      agreement: 0,
+      commission: 0
     },
     validationSchema,
     onSubmit: async (values) => {
+      // console.log(values);
       try {
         setIsSubmitting(true);
 
@@ -87,12 +97,13 @@ const AgentForm = () => {
         formData.append("stateCity", values.location);
         formData.append("inspectionFee", values.inspectionFee.toString());
         formData.append("totalDeals", values.totalDeals.toString());
-
+        formData.append("agreement", values.totalDeals.toString());
+        formData.append("commission", values.totalDeals.toString());
         const response = await handleAgentForm(formData, userToken);
         if (response.status === 201) {
             toast.success(response.data.message)
-            setTimeout(() => {     
-                navigate('/')            
+            setTimeout(() => {
+                navigate('/')
             }, 2000);
         }
         formik.resetForm();
@@ -100,7 +111,10 @@ const AgentForm = () => {
         setIsSubmitting(false);
       } catch (error) {
         setIsSubmitting(false);
-        toast.error(error.response?.data?.message || "Error saving profile. Please try again.");
+        toast.error(
+          error.response?.data?.message ||
+            "Error saving profile. Please try again."
+        );
       }
     },
   });
@@ -126,7 +140,7 @@ const AgentForm = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Reset error states
     setPhotoError("");
     setAboutError("");
@@ -162,13 +176,11 @@ const AgentForm = () => {
         <section className="font-mont py-[0] sm:py-[65px]">
           <div className="w-full md:w-[90%] max-w-[966px] bg-[#fff] sm:rounded-[8px] mx-auto">
             <div className="p-[24px] sm:px-[16px] flex gap-[16px] items-center border-t-[0px] sm:border-[1px] border-[#EAEAEA]">
-              <div
-                className="border-[1px] border-[#EAEAEA] rounded-[8px] p-[10px] cursor-pointer"
-              >
+              <div className="border-[1px] border-[#EAEAEA] rounded-[8px] p-[10px] cursor-pointer">
                 <IoIosArrowRoundBack className="text-[16px] text-[#292D32]" />
               </div>
               <h1 className="font-medium text-[18px] leading-[27px] sm:leading-[24px] tracking-[3%] text-[#121927]">
-                Step 1: Agent Form
+                Agent Form
               </h1>
             </div>
             <div className="border-[1px] border-[#EAEAEA] px-[16px] sm:px-[80px] py-[24px]">
@@ -176,7 +188,7 @@ const AgentForm = () => {
                 Add Display Image
               </h2>
               <p className="font-regular text-[16px] text-[#535353] leading-[145%] tracking-[0%] mb-[40px]">
-                Upload a professional image  that will serve as your display
+                Upload a professional image that will serve as your display
                 picture
               </p>
               <div className="relative w-full max-w-[283px] aspect-[283/257] bg-[#D9D9D9] border border-[#D9D9D9] rounded-[8px] flex items-center justify-center">
@@ -289,13 +301,23 @@ const AgentForm = () => {
 
                 <div>
                   <label className="block font-regular text-[16px] text-[#535353] mb-2">
-                    State/City
+                    State
                   </label>
-                  <input
+                  <select
+                    className="w-full border-[1px] border-[#EAEAEA] rounded-[8px] p-4 outline-none"
+                    {...formik.getFieldProps("location")}
+                  >
+                    {nigerianStates.map((state, index) => (
+                      <option key={index} value={state.value}>
+                        {state.option}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <input
                     type="text"
                     {...formik.getFieldProps("location")}
                     className="w-full border-[1px] border-[#EAEAEA] rounded-[8px] p-4 outline-none"
-                  />
+                  /> */}
                   {formik.touched.location && formik.errors.location && (
                     <div className="text-red-500 text-sm mt-1">
                       {formik.errors.location}
@@ -332,6 +354,36 @@ const AgentForm = () => {
                   {formik.touched.totalDeals && formik.errors.totalDeals && (
                     <div className="text-red-500 text-sm mt-1">
                       {formik.errors.totalDeals}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <label className="block font-regular text-[16px] text-[#535353] mb-2">
+                    Agreement
+                  </label>
+                  <input
+                    type="number"
+                    {...formik.getFieldProps("agreement")}
+                    className="w-full border-[1px] border-[#EAEAEA] rounded-[8px] p-4 outline-none"
+                  />
+                  {formik.touched.agreement && formik.errors.agreement && (
+                    <div className="text-red-500 text-sm mt-1">
+                      {formik.errors.agreement}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <label className="block font-regular text-[16px] text-[#535353] mb-2">
+                    Commission
+                  </label>
+                  <input
+                    type="number"
+                    {...formik.getFieldProps("commission")}
+                    className="w-full border-[1px] border-[#EAEAEA] rounded-[8px] p-4 outline-none"
+                  />
+                  {formik.touched.commission && formik.errors.commission && (
+                    <div className="text-red-500 text-sm mt-1">
+                      {formik.errors.commission}
                     </div>
                   )}
                 </div>

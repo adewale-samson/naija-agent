@@ -151,7 +151,7 @@ const CityPage = () => {
               </div>
               <button
                 onClick={() => handleSeeMore(data?.id)}
-                className="w-[80px] sm:w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[14px] sm:text-[16px] leading-[150%] tracking-[0] rounded-[15px]"
+                className="w-[80px] sm:w-[139px] h-[40px] bg-[#337E66] text-[#fff] font-[600] text-[14px] sm:text-[16px] leading-[150%] tracking-[0] rounded-[15px] cursor-pointer"
               >
                 See More
               </button>

@@ -37,13 +37,13 @@ const Login = () => {
           setLoader(true); 
           await LoginAuth(values)
           .then(res => {
-            console.log(res)
+            // console.log(res)
             Cookies.set('token', res.data.token, { expires: 1 });
             Cookies.set('id', res.data.data.user._id, { expires: 1 });
             toast.success("Login successful!");
             actions.resetForm();
             setTimeout(() => {
-              if(res.data.data.user.isVerified && res.data.data.user.name){
+              if(res.data.data.user.image && res.data.data.user.isVerified && res.data.data.user.inspectionFee){
                 navigate('/dashboard')
               } else {
                 navigate('/agentform')
