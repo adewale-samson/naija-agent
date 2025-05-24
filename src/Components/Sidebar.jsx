@@ -5,8 +5,10 @@ import { BiSolidExit } from "react-icons/bi";
 import { FaComment } from "react-icons/fa6";
 import { RiShakeHandsFill } from "react-icons/ri";
 import { FaCommentDollar } from "react-icons/fa6";
+import { HiMiniWrenchScrewdriver } from "react-icons/hi2";
 import { HiChartPie } from "react-icons/hi";
 import { RiBuildingFill } from "react-icons/ri";
+import { VscSignOut } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 
@@ -15,6 +17,11 @@ const navItems = [
     id: "dashboard",
     label: "Dashboard",
     icon: <HiChartPie className="text-[#337E66]" />,
+  },
+  {
+    id: "edit-profile",
+    label: "Edit Profile",
+    icon: <HiMiniWrenchScrewdriver className="text-[#337E66]" />,
   },
   {
     id: "comments",
@@ -26,21 +33,21 @@ const navItems = [
     label: "Commissions",
     icon: <RiShakeHandsFill className="text-[#6778C6]" />,
   },
-  {
-    id: "inspection-fees",
-    label: "Inspection fees",
-    icon: <FaCommentDollar className="text-[#69B399]" />,
-  },
-  {
-    id: "total-rents",
-    label: "Total Rents",
-    icon: <RiBuildingFill className="text-[#00BB91]" />,
-  },
-  {
-    id: "total-sales",
-    label: "Total Sales",
-    icon: <HiChartPie className="text-[#DEB887]" />,
-  },
+  // {
+  //   id: "inspection-fees",
+  //   label: "Inspection fees",
+  //   icon: <FaCommentDollar className="text-[#69B399]" />,
+  // },
+  // {
+  //   id: "total-rents",
+  //   label: "Total Rents",
+  //   icon: <RiBuildingFill className="text-[#00BB91]" />,
+  // },
+  // {
+  //   id: "total-sales",
+  //   label: "Total Sales",
+  //   icon: <HiChartPie className="text-[#DEB887]" />,
+  // },
 ];
 
 const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
@@ -94,6 +101,7 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
 
   const handleSignout = () => {
     Cookies.remove("token");
+    Cookies.remove("id");
     window.location.href = "/";
   };
 
@@ -157,14 +165,14 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
           Welcome, {getFirstName(agentInfo.name)}
         </h3>
       )}
-      {!collapsed && (
+      {/* {!collapsed && (
         <button
           onClick={() => navigate("/edit-profile")}
           className="text-[14px] text-blue-600 hover:underline text-center mb-6"
         >
           Edit Profile
         </button>
-      )}
+      )} */}
 
       {/* Navigation */}
       <div className="flex flex-col items-center gap-6">
@@ -194,10 +202,11 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
           onClick={handleSignout}
         >
           <div className="text-xl">
-            <BiSolidExit className="text-[#000000]" />
+            {/* <BiSolidExit className="text-[#000000]" /> */}
+            <VscSignOut className="text-[#337E66]"/>
           </div>
           {!collapsed && (
-            <span className="w-[84px] text-[20px] text-[#000] leading-[100%]  text-center">
+            <span className="text-md w-29 text-center font-semibold text-[14px] leading-none tracking-[0] text-[#000]">
               Log Out
             </span>
           )}

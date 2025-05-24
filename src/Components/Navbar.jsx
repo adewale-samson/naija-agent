@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router";
 import Cookies from "js-cookie";
+import { VscSignOut } from "react-icons/vsc";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +76,8 @@ const Navbar = () => {
   };
   const handleSignout = () => {
     Cookies.remove("token");
-    window.location.reload();
+    Cookies.remove("id");
+    window.location.href = "/";
     // navigate('/')
   };
   return (
@@ -176,11 +178,14 @@ const Navbar = () => {
           {showSignout && (
             <div
               className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
-              onClick={handleSignout}
+              onClick={()=>navigate('/dashboard')}
             >
-              SIGN OUT
+              Dashboard
             </div>
           )}
+          {showSignout && <div>
+            <VscSignOut className="text-[#337E66] text-[20px]" onClick={handleSignout}/>
+          </div>}
         </div>
       </div>
 
@@ -245,11 +250,14 @@ const Navbar = () => {
           {showSignout && (
             <div
               className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
-              onClick={handleSignout}
+              onClick={()=>navigate('/dashboard')}
             >
-              SIGN OUT
+              Dashboard
             </div>
           )}
+          {showSignout && <div>
+            <VscSignOut className="text-[#337E66] text-[20px]" onClick={handleSignout}/>
+          </div>}
         </ul>
       </div>
     </nav>

@@ -3,16 +3,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getAgentById, getComments, postComment } from "../api/data";
 import { ToastContainer, toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const AgentDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [agent, setAgent] = useState({});
   const [comment, setComment] = useState("");
   const [userName, setUserName] = useState("");
   const [comments, setComments] = useState([]);
+  const [updateComment, setUpdateComment] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingComments, setIsLoadingComments] = useState(true);
 
   useEffect(() => {
     getAgentById(id)
@@ -25,15 +27,18 @@ const AgentDetails = () => {
       });
   }, []);
   useEffect(() => {
+    setIsLoadingComments(true);
     getComments(id)
       .then((res) => {
-        // console.log(res.data.data.comments)
         setComments(res.data.data.comments);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
+      })
+      .finally(() => {
+        setIsLoadingComments(false);
       });
-  }, []);
+  }, [updateComment]);
 
   const handleSubmitComment = (e) => {
     e.preventDefault();
@@ -43,14 +48,15 @@ const AgentDetails = () => {
     // const currentDate = new Date().toISOString().split("T")[0];
     const newValue = {
       fullname: userName,
-      content: comment
-    }
-    
+      content: comment,
+    };
+
     postComment(newValue, id)
       .then((res) => {
         toast.success(res.data.message);
-        setComment("");
+        setUpdateComment(prev => prev + 1);
         setUserName("");
+        setComment("");
       })
       .catch((err) => {
         // console.log(err);
@@ -60,7 +66,13 @@ const AgentDetails = () => {
         setIsSubmitting(false);
       });
   };
-
+  function formatDate(isoString) {
+    return new Date(isoString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  }
   return (
     <div className="font-mont bg-[#FAFAFA] px-4 sm:px-6 py-[24px] max-w-4xl mx-auto">
       <ToastContainer />
@@ -84,7 +96,6 @@ const AgentDetails = () => {
         </svg>
         Back
       </button>
-
       {/* Agent Profile Section */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <div className="flex flex-col md:flex-row gap-6">
@@ -191,7 +202,6 @@ const AgentDetails = () => {
           </div>
         </div>
       </div>
-
       {/* Comment Form Section */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-xl font-bold mb-4">Leave a Comment</h2>
@@ -214,18 +224,21 @@ const AgentDetails = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-[#337E66] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#337E66] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Submitting..." : "Submit Comment"}
           </button>
         </form>
       </div>
-
-      {/* Comments Section */}
+      {/* Comments Section */}{" "}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-bold mb-4">Comments</h2>
         <div className="space-y-4">
-          {comments.length === 0 ? (
+          {isLoadingComments ? (
+            <div className="flex justify-center items-center py-8">
+              <ClipLoader size={30} color={"#337E66"} />
+            </div>
+          ) : comments.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <svg
                 className="w-16 h-16 mx-auto mb-4 text-gray-400"
@@ -251,7 +264,9 @@ const AgentDetails = () => {
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-semibold">{comment.fullname}</span>
-                  <span className="text-gray-500 text-sm">{comment.updatedAt}</span>
+                  <span className="text-gray-500 text-sm">
+                    {formatDate(comment.updatedAt)}
+                  </span>
                 </div>
                 <p className="text-gray-600">{comment.content}</p>
               </div>
