@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   
     const onSubmit = async (values, actions) => {
       try {
-            console.log(values)
+            // console.log(values)
             setLoader(true); 
             await forgotPassword(values)
             .then(res => {

@@ -37,7 +37,7 @@ const DashboardOverview = ({ agentData }) => {
             </span> */}
           </div>
           <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#fff] leading-[100%] tracking-[0]">
-            {agentData?.rents || 0}
+            {agentData?.rentPrice || 0}
           </p>
         </div>
         <div className="w-full min-h-[150px] bg-[#DEB887] p-6 md:p-4 lg:p-6 rounded-[30px]">
@@ -148,7 +148,7 @@ const Dashboard = () => {
       case "dashboard":
         return <DashboardOverview agentData={agentData} />;
       case "edit-profile":
-        return <EditProfile agentData={agentData}/>;
+        return <EditProfile agentData={agentData} setAgentData={setAgentData}/>;
       case "comments":
         return <Comments />;
       case "commissions":
