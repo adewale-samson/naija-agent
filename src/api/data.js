@@ -8,6 +8,13 @@ export const handleAgentForm = (data, token) => {
         }
     })
 }
+export const editProfile = (data, token) => {
+    return axiosFormDataInstance.put('/api/v1/user/edit', data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+}
 export const getLocationData = (location, token) => {
     return axiosInstance.get(`/api/v1/user/location/${location}`, {
         // headers: {

@@ -6,11 +6,11 @@ import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 import UserIcon from "../../assets/user-icon.svg";
 import EditIcon from "../../assets/edit-icon2.svg";
-import { getComments, handleAgentForm } from "../../api/data";
+import { editProfile, getComments, } from "../../api/data";
 import Cookies from "js-cookie";
 import { nigerianStates } from "../../constants/states";
 
-const EditProfile = ({ agentData }) => {
+const EditProfile = ({ agentData, setAgentData }) => {
   const [photo, setPhoto] = useState();
   const [photoError, setPhotoError] = useState("");
   const [aboutError, setAboutError] = useState("");
@@ -80,8 +80,8 @@ const EditProfile = ({ agentData }) => {
       phone: agentData.phone || "",
       email: agentData.email || "",
       address: agentData.address || "",
-      bio: agentData.about || "",
-      rentPrice: agentData.rents || 0,
+      bio: agentData.bio || "",
+      rentPrice: agentData.rentPrice || 0,
       sales: agentData.sales || 0,
       airbnb: agentData.airbnb || 0,
       location: agentData.state ? agentData.state.toLowerCase() : "",
@@ -92,16 +92,14 @@ const EditProfile = ({ agentData }) => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      // console.log(values);
-      try {
         setIsSubmitting(true);
         const formData = new FormData();
         // Only append photo if a new one is selected
         if (photo) {
           formData.append("image", photo);
         }
-        formData.append("about", values.bio);
-        formData.append("rents", values.rentPrice.toString());
+        formData.append("bio", values.bio);
+        formData.append("rentPrice", values.rentPrice.toString());
         formData.append("phone", values.phone.toString());
         formData.append("address", values.address.toString());
         formData.append("sales", values.sales.toString());
@@ -111,24 +109,30 @@ const EditProfile = ({ agentData }) => {
         formData.append("totalDeals", values.totalDeals.toString());
         formData.append("agreement", values.agreement.toString());
         formData.append("commission", values.commission.toString());
-        const response = await handleAgentForm(formData, userToken);
-        // console.log(response);
-        if (response.status === 201) {
-          toast.success(response.data.message);
-          // setTimeout(() => {
-          //   navigate("/");
-          // }, 2000);
-        }
-        formik.resetForm();
-        setPhoto(null);
-        setIsSubmitting(false);
-      } catch (error) {
-        setIsSubmitting(false);
-        toast.error(
-          error.response?.data?.message ||
-            "Error saving profile. Please try again."
-        );
-      }
+
+        editProfile(formData, userToken)
+        .then(response => {
+          // console.log(response);
+          if (response.status === 201) {
+            toast.success(response.data.message);
+            setAgentData(response.data.data)
+            // setTimeout(() => {
+            //   navigate("/");
+            // }, 2000);
+          }
+          formik.resetForm();
+          setPhoto(null);
+          setIsSubmitting(false);
+
+        })
+        .catch(error => {
+          // console.log(error)
+          setIsSubmitting(false);
+          toast.error(
+            error.response?.data?.message ||
+              "Error saving profile. Please try again."
+          );
+        })
     },
   });
 
@@ -170,6 +174,7 @@ const EditProfile = ({ agentData }) => {
   // console.log(formik.errors);
   return (
     <section className="font-mont py-0">
+        <ToastContainer />
       <div className="w-full bg-[#fff] sm:rounded-[8px] mx-auto">
         {/* <div className="px-[16px] sm:px-[24px] lg:px-[80px] py-[24px] flex gap-[16px] items-center border-t-[0px] sm:border-[1px] border-[#EAEAEA]">
           

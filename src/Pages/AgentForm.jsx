@@ -307,6 +307,7 @@ const AgentForm = () => {
                     className="w-full border-[1px] border-[#EAEAEA] rounded-[8px] p-4 outline-none"
                     {...formik.getFieldProps("location")}
                   >
+                    <option value=''>Select State</option>
                     {nigerianStates.map((state, index) => (
                       <option key={index} value={state.value}>
                         {state.option}

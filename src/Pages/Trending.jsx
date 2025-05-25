@@ -1,21 +1,32 @@
 import Smiling from "../assets/smiling-girl.png";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
-import { searchLocationData } from "../api/data";
+import { getLocationData, searchLocationData } from "../api/data";
 import { useNavigate } from "react-router";
+import EmptyUser from "../assets/empty-user.svg";
 
 const Trending = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [locationData, setLocationData] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    getLocationData("Lagos")
+      .then((res) => {
+        setLocationData(res.data.data);
+      })
+      .catch((err) => {});
+  }, []);
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchQuery) {
         searchAgents();
+      } else {
+        setSearchResults([]); 
       }
     }, 500);
 
@@ -37,10 +48,10 @@ const Trending = () => {
     }
   };
 
-  const handleSeeMore = (agentId) => {
+  const handleDetails = (agentId) => {
     navigate(`/agent/${agentId}`);
   };
-
+  console.log(locationData)
   return (
     <section className="font-mont px-[16px] sm:px-[49px]">
       <form
@@ -71,21 +82,22 @@ const Trending = () => {
         {searchQuery ? "SEARCH RESULTS" : "TRENDING AGENTS"}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[50px] my-[30px] px-4 max-w-[1200px] mx-auto">
-        {(searchResults.length > 0 ? searchResults : Array(16).fill(0)).map(
+        {/* {(searchResults.length > 0 ? searchResults : Array(16).fill(0)).map( */}
+        {(searchResults.length > 0 ? searchResults : locationData).map(
           (agent, index) => (
             <div
               key={agent._id || index}
               className="relative w-full h-[213px] border border-[#D9D9D9] rounded-[20px] overflow-hidden cursor-pointer"
-              onClick={() => agent._id && handleSeeMore(agent._id)}
+              onClick={() => handleDetails(agent.id)}
             >
               <img
-                src={agent.image || Smiling}
-                alt={agent.name || "Agent photo"}
+                src={agent.image || EmptyUser}
+                alt={agent.name || "image"}
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-[17px] left-1/2 -translate-x-1/2 w-[176px] h-[48px] rounded-[20px] bg-[rgba(51, 126, 102, 0.7)] flex justify-center items-center backdrop-blur-2xl">
                 <p className="w-[70%] font-bold text-[13px] text-[#fff] text-center leading-[150%] tracking-[0]">
-                  {agent.name || "AP Realtors Lagos"}
+                  {agent.name || ""}
                 </p>
               </div>
             </div>
