@@ -51,7 +51,7 @@ const Trending = () => {
   const handleDetails = (agentId) => {
     navigate(`/agent/${agentId}`);
   };
-  console.log(locationData)
+  // console.log(locationData)
   return (
     <section className="font-mont px-[16px] sm:px-[49px]">
       <form

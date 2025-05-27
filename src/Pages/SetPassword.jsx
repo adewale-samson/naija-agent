@@ -41,7 +41,7 @@ const SetPassword = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-      console.log(values);
+      // console.log(values);
       setLoader(true);
       await resetPassword(values)
         .then((res) => {

@@ -360,7 +360,7 @@ const AgentForm = () => {
                 </div>
                 <div>
                   <label className="block font-regular text-[16px] text-[#535353] mb-2">
-                    Agreement
+                    Agreement (%)
                   </label>
                   <input
                     type="number"
@@ -375,7 +375,7 @@ const AgentForm = () => {
                 </div>
                 <div>
                   <label className="block font-regular text-[16px] text-[#535353] mb-2">
-                    Commission
+                    Commission (%)
                   </label>
                   <input
                     type="number"

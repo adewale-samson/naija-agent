@@ -16,13 +16,14 @@ const navItems = [
   { id: "dashboard", label: "Dashboard", icon: null },
   { id: "edit-profile", label: "Edit Profile", icon: null },
   { id: "comments", label: "Comments", icon: null },
-  { id: "commissions", label: "Commissions", icon: null },
+  // { id: "commissions", label: "Commissions", icon: null },
   // { id: "inspection-fees", label: "Inspection fees", icon: null },
   // { id: "total-rents", label: "Total Rents", icon: null },
   // { id: "total-sales", label: "Total Sales", icon: null },
 ];
 
 const DashboardOverview = ({ agentData }) => {
+  // console.log(agentData)
   return (
     <>
       {/* Cards */}
@@ -36,8 +37,8 @@ const DashboardOverview = ({ agentData }) => {
               +15%
             </span> */}
           </div>
-          <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#fff] leading-[100%] tracking-[0]">
-            {agentData?.rentPrice || 0}
+          <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#000] leading-[100%] tracking-[0]">
+            {parseInt(agentData?.rentPrice)?.toLocaleString() || 0}
           </p>
         </div>
         <div className="w-full min-h-[150px] bg-[#DEB887] p-6 md:p-4 lg:p-6 rounded-[30px]">
@@ -49,20 +50,20 @@ const DashboardOverview = ({ agentData }) => {
               +15%
             </span> */}
           </div>
-          <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#fff] leading-[100%] tracking-[0]">
-            ₦{agentData?.sales || 0}
+          <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#000] leading-[100%] tracking-[0]">
+            ₦{parseInt(agentData?.sales)?.toLocaleString() || 0}
           </p>
         </div>
         <div className="w-full min-h-[150px] bg-[#D6D8E7] p-6 md:p-4 lg:p-6 rounded-[30px]">
           <div className="flex justify-center items-center mb-[20px]">
             <h4 className="font-[800] text-[16px] text-[#000000] leading-[100%]">
-              Commission
+              Commission (%)
             </h4>
             {/* <span className="font-[800] text-[#000] text-[16px] leading-[100%] tracking-[0] rounded-[20px] border-none p-[10px] bg-[#fff]">
               +15%
             </span> */}
           </div>
-          <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#000000] leading-[100%] tracking-[0]">₦{agentData?.commission?.toLocaleString() || 0}</p>
+          <p className="font-[800] text-center text-[16px] lg:text-[24px] text-[#000000] leading-[100%] tracking-[0]">{agentData?.commission?.toLocaleString() || 0}</p>
         </div>
       </div>
 
@@ -151,8 +152,8 @@ const Dashboard = () => {
         return <EditProfile agentData={agentData} setAgentData={setAgentData}/>;
       case "comments":
         return <Comments />;
-      case "commissions":
-        return <Commissions />;
+      // case "commissions":
+      //   return <Commissions />;
       // case "inspection-fees":
       //   return <InspectionFees />;
       // case "total-rents":

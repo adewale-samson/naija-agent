@@ -481,7 +481,7 @@ const EditProfile = ({ agentData, setAgentData }) => {
             </div>
             <div>
               <label className="block font-regular text-[16px] text-[#535353] mb-2">
-                Agreement
+                Agreement (%)
               </label>
               <input
                 type="number"
@@ -496,7 +496,7 @@ const EditProfile = ({ agentData, setAgentData }) => {
             </div>
             <div>
               <label className="block font-regular text-[16px] text-[#535353] mb-2">
-                Commission
+                Commission (%)
               </label>
               <input
                 type="number"

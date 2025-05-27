@@ -29,11 +29,11 @@ const Footer = () => {
         </li>
         <li className="flex items-center gap-[8px] font-medium text-[11px] sm:text-[12px] leading-[100%] tracking-[0%] mb-[2px]">
           <RiInstagramFill className="text-[#fff] text-[20px] sm:text-[24px]" />{" "}
-          RentIt-Nigeria
+          RentIt.ng
         </li>
         <li className="flex items-center gap-[8px] font-medium text-[11px] sm:text-[12px] leading-[100%] tracking-[0%] mb-[2px]">
           <IoLogoTwitter className="text-[#fff] text-[20px] sm:text-[24px]" />{" "}
-          RentIt-Nigeria
+          RentIt.ng
         </li>
       </ul>
       <ul className="">
