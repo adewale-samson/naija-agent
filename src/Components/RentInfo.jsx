@@ -36,7 +36,7 @@ const RentInfo = () => {
               </div>
               <div>
                 <div className="font-semibold text-[18px] md:text-[20px] text-[#000] leading-[100%] tracking-[0%] mb-[5px]">
-                  20M
+                  4.8
                 </div>
                 <p className="font-[300] text-[10px] leading-[100%] tracking-[0%]">
                   Positive rating

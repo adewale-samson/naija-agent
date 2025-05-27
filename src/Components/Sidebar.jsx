@@ -28,11 +28,11 @@ const navItems = [
     label: "Comments",
     icon: <FaComment className="text-[#337E66]" />,
   },
-  {
-    id: "commissions",
-    label: "Commissions",
-    icon: <RiShakeHandsFill className="text-[#6778C6]" />,
-  },
+  // {
+  //   id: "commissions",
+  //   label: "Commissions",
+  //   icon: <RiShakeHandsFill className="text-[#6778C6]" />,
+  // },
   // {
   //   id: "inspection-fees",
   //   label: "Inspection fees",
