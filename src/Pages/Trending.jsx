@@ -53,7 +53,7 @@ const Trending = () => {
   };
   // console.log(locationData)
   return (
-    <section className="font-mont px-[16px] sm:px-[49px]">
+    <section className="font-mont min-h-[700px] px-[16px] sm:px-[49px]">
       <form
         className="flex items-center justify-center w-full"
         onSubmit={(e) => e.preventDefault()}
