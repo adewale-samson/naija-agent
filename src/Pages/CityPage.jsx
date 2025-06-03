@@ -6,6 +6,11 @@ import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { ClipLoader } from "react-spinners";
 
+const capitalizeFirstLetter = (string) => {
+  if (!string) return "";
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
 const CityPage = () => {
   const navigate = useNavigate();
   const { cityName } = useParams();
@@ -30,7 +35,7 @@ const CityPage = () => {
   useEffect(() => {
     setLoader(true);
     setError({ type: null, message: "" });
-    
+
     getLocationData(cityName, userToken)
       .then((res) => {
         setLocationData(res.data.data);
@@ -40,19 +45,19 @@ const CityPage = () => {
         setLocationData([]);
         setLoader(false);
         if (err.response?.status === 404) {
-          setError({ 
-            type: "not_found", 
-            message: "No agents found in this location yet" 
+          setError({
+            type: "not_found",
+            message: "No agents found in this location yet",
           });
         } else if (!window.navigator.onLine) {
-          setError({ 
-            type: "network", 
-            message: "Please check your internet connection and try again" 
+          setError({
+            type: "network",
+            message: "Please check your internet connection and try again",
           });
         } else {
-          setError({ 
-            type: "other", 
-            message: "Something went wrong. Please try again later" 
+          setError({
+            type: "other",
+            message: "Something went wrong. Please try again later",
           });
         }
       });
@@ -65,13 +70,39 @@ const CityPage = () => {
   const EmptyState = ({ message }) => (
     <div className="min-h-[700px] flex flex-col justify-center items-center text-center px-4">
       <div className="mb-4">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#337E66" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 8V12" stroke="#337E66" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12 16H12.01" stroke="#337E66" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+            stroke="#337E66"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 8V12"
+            stroke="#337E66"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 16H12.01"
+            stroke="#337E66"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">No Results Found</h3>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+        No Results Found
+      </h3>
       <p className="text-gray-600">{message}</p>
     </div>
   );
@@ -86,7 +117,7 @@ const CityPage = () => {
     >
       {loader ? (
         <div className="min-h-[700px] flex justify-center items-center">
-          <ClipLoader size={40} color={'#337E66'}/>
+          <ClipLoader size={40} color={"#337E66"} />
         </div>
       ) : error.type ? (
         <EmptyState message={error.message} />
@@ -101,7 +132,10 @@ const CityPage = () => {
             >
               <div className="w-[120px] md:w-[150px]">
                 <div className="w-[55px] sm:w-[88px] h-[55px] sm:h-[88px] overflow-hidden rounded-[50%] mx-auto">
-                  <img src={data.image} className="w-full h-full object-cover" />
+                  <img
+                    src={data.image}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h3 className="font-[600] text-[12px] sm:text-[16px] text-[#000] text-center leading-[150%] tracking-[0] mt-[14px]">
                   {data.name}
@@ -112,7 +146,7 @@ const CityPage = () => {
                   LOCATION
                 </h4>
                 <p className="font-[600] text-[14px] sm:text-[16px] text-[#000] leading-[150%] tracking-[0]">
-                  {data.state}
+                  {capitalizeFirstLetter(data.state)}
                 </p>
               </div>
               <div className="sm:hidden">
@@ -121,7 +155,7 @@ const CityPage = () => {
                     LOCATION
                   </h4>
                   <p className="font-[600] text-[14px] sm:text-[16px] text-[#000] leading-[120%] tracking-[0]">
-                    {data.state}
+                    {capitalizeFirstLetter(data.state)}
                   </p>
                 </div>
                 <div className="">
@@ -129,7 +163,7 @@ const CityPage = () => {
                     INSPECTION FEE
                   </h4>
                   <p className="font-[600] text-[14px] sm:text-[16px] text-[#000] leading-[120%] tracking-[0]">
-                  ₦{data.inspectionFee}
+                    ₦{data.inspectionFee}
                   </p>
                 </div>
               </div>
@@ -138,7 +172,7 @@ const CityPage = () => {
                   INSPECTION FEE
                 </h4>
                 <p className="font-[600] text-[14px] sm:text-[16px] text-[#000] leading-[150%] tracking-[0]">
-                ₦{data.inspectionFee}
+                  ₦{data.inspectionFee}
                 </p>
               </div>
               <div className="hidden lg:block">

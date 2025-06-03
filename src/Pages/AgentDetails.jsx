@@ -19,7 +19,7 @@ const AgentDetails = () => {
   useEffect(() => {
     getAgentById(id)
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         setAgent(res.data.data);
       })
       .catch((err) => {
@@ -194,7 +194,7 @@ const AgentDetails = () => {
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-sm text-gray-500">Sales</p>
                   <p className="text-lg font-semibold">
-                    ₦{agent.sales?.toLocaleString() || "0"}
+                    {agent.sales?.toLocaleString() || "0"}
                   </p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
@@ -206,13 +206,13 @@ const AgentDetails = () => {
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-sm text-gray-500">Commission (%)</p>
                   <p className="text-lg font-semibold">
-                    ₦{agent.commission?.toLocaleString() || "0"}
+                    {agent.commission?.toLocaleString() || "0"}
                   </p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-sm text-gray-500">Agreement (%)</p>
                   <p className="text-lg font-semibold">
-                    ₦{agent.commission?.toLocaleString() || "0"}
+                    {agent.agreement?.toLocaleString() || "0"}
                   </p>
                 </div>
               </div>
