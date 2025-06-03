@@ -10,7 +10,7 @@ import { editProfile, getComments, } from "../../api/data";
 import Cookies from "js-cookie";
 import { nigerianStates } from "../../constants/states";
 
-const EditProfile = ({ agentData, setAgentData }) => {
+const EditProfile = ({ agentData, setAgentData, setActiveItem }) => {
   const [photo, setPhoto] = useState();
   const [photoError, setPhotoError] = useState("");
   const [aboutError, setAboutError] = useState("");
@@ -81,6 +81,7 @@ const EditProfile = ({ agentData, setAgentData }) => {
       email: agentData.email || "",
       address: agentData.address || "",
       bio: agentData.bio || "",
+      instagram: agentData.instagram || '',
       rentPrice: agentData.rentPrice || 0,
       sales: agentData.sales || 0,
       airbnb: agentData.airbnb || 0,
@@ -109,15 +110,17 @@ const EditProfile = ({ agentData, setAgentData }) => {
         formData.append("totalDeals", values.totalDeals.toString());
         formData.append("agreement", values.agreement.toString());
         formData.append("commission", values.commission.toString());
+        formData.append("instagram", values.instagram);
 
         editProfile(formData, userToken)
         .then(response => {
           // console.log(response);
           if (response.status === 201) {
             toast.success(response.data.message);
-            setAgentData(response.data.data)
+            setAgentData(response.data.data.updatedUser)
+            setActiveItem('dashboard')
             // setTimeout(() => {
-            //   navigate("/");
+            //   navigate("/dashboard");
             // }, 2000);
           }
           formik.resetForm();
@@ -171,7 +174,7 @@ const EditProfile = ({ agentData, setAgentData }) => {
     // Submit the form if all validations pass
     formik.handleSubmit(e);
   };
-  // console.log(formik.errors);
+  // console.log(agentData);
   return (
     <section className="font-mont py-0">
         <ToastContainer />
@@ -323,6 +326,27 @@ const EditProfile = ({ agentData, setAgentData }) => {
                 className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none"
               />
             </div>
+          </div>
+          <div className="mb-6 sm:mb-4">
+            <label
+              htmlFor="instagram"
+              className={
+                formik.errors.instagram && formik.touched.instagram
+                  ? "text-[#fc8181] block mb-2"
+                  : "block mb-2"
+              }
+            >
+              {formik.errors.instagram && formik.touched.instagram
+                ? `${formik.errors.instagram}`
+                : "Instagram (url)"}
+            </label>
+            <input
+              type="text"
+              id="instagram"
+              {...formik.getFieldProps("instagram")}
+              placeholder="Enter your full instagram url"
+              className="font-mont block text-[#828282] border-[1px] border-[#EAEAEA] h-[48px] w-[100%] rounded-[8px] p-[15px] outline-none "
+            />
           </div>
           {/* <p className="font-regular text-[16px] text-[#535353] leading-[145%] tracking-[0%] mb-[40px]">
             Enter a detailed description about you, this is what whoever sees

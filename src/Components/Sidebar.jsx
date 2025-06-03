@@ -76,7 +76,8 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
       if (
         sidebarRef.current &&
         !sidebarRef.current.contains(event.target) &&
-        !collapsed
+        !collapsed &&
+        window.innerWidth < 768 // Only collapse on mobile screens
       ) {
         setCollapsed(true);
       }
@@ -102,6 +103,8 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
   const handleSignout = () => {
     Cookies.remove("token");
     Cookies.remove("id");
+    Cookies.remove("name");
+    Cookies.remove("email");
     window.location.href = "/";
   };
 
@@ -140,7 +143,7 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
 
       {/* Profile Picture */}
       <div className="relative mb-5 flex justify-center">
-        <div className="relative">
+        <div className="relative" onClick={() => handleItemClick('edit-profile')}>
           <img
             src={agentInfo.image}
             alt="Profile"
@@ -203,7 +206,7 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
         >
           <div className="text-xl">
             {/* <BiSolidExit className="text-[#000000]" /> */}
-            <VscSignOut className="text-[#337E66]"/>
+            <VscSignOut className="text-[#337E66]" />
           </div>
           {!collapsed && (
             <span className="text-md w-29 text-center font-semibold text-[14px] leading-none tracking-[0] text-[#000]">

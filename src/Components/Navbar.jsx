@@ -77,6 +77,8 @@ const Navbar = () => {
   const handleSignout = () => {
     Cookies.remove("token");
     Cookies.remove("id");
+    Cookies.remove("name");
+    Cookies.remove("email");
     window.location.href = "/";
     // navigate('/')
   };

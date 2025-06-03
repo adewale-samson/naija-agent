@@ -42,7 +42,7 @@ const Signup = () => {
     state: yup.string().required("State is required"),
     instagram: yup
       .string()
-      .required("Instagram url is required")
+      // .required("Instagram url is required")
       .matches(
         /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9_.]+(\/)?$/,
         "Please enter a valid Instagram URL (e.g., https://instagram.com/username)"
@@ -63,12 +63,15 @@ const Signup = () => {
       ),
     // checkbox: yup.boolean().oneOf([true], "Please accept the terms"),
   });
-
   const onSubmit = async (values, actions) => {
     try {
-      // console.log(values);
+      const { instagram, ...otherValues } = values;
+      const signupData = {
+        ...otherValues,
+        ...(instagram.trim() !== "" && { instagram }),
+      };
       setLoader(true);
-      await SignupAuth(values)
+      await SignupAuth(signupData)
         .then((res) => {
           // console.log(res)
           Cookies.set("name", getFirstName(res.data.response.name), {
@@ -82,12 +85,12 @@ const Signup = () => {
           }, 2500);
         })
         .catch((err) => {
-          // console.log(err)
+          console.log(err);
           toast.error(err?.response?.data?.message || "Something went wrong!");
         });
     } catch (error) {
       toast.error("Failed to create account. Please try again.");
-      // console.error("Signup error:", error);
+      console.error("Signup error:", error);
     } finally {
       setLoader(false);
       actions.setSubmitting(false);

@@ -23,7 +23,8 @@ const validationSchema = Yup.object({
   airbnb: Yup.number()
     .min(1, "AirBnB listings must be greater than 0")
     .required("Number of AirBnB listings is required"),
-  location: Yup.string().required("State is required"),
+  // location: Yup.string().required("State is required"),
+  // location: Yup.string(),
   inspectionFee: Yup.number()
     .min(1, "Inspection fee must be greater than 0")
     .required("Inspection fee is required"),
@@ -70,7 +71,7 @@ const AgentForm = () => {
       rentPrice: 0,
       sales: 0,
       airbnb: 0,
-      location: "",
+      // location: "",
       inspectionFee: 0,
       totalDeals: 0,
       agreement: 0,
@@ -78,7 +79,7 @@ const AgentForm = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      // console.log(values);
+      console.log(values);
       try {
         setIsSubmitting(true);
 
@@ -94,12 +95,13 @@ const AgentForm = () => {
         formData.append("rents", values.rentPrice.toString());
         formData.append("sales", values.sales.toString());
         formData.append("airbnb", values.airbnb.toString());
-        formData.append("stateCity", values.location);
+        // formData.append("stateCity", values.location);
         formData.append("inspectionFee", values.inspectionFee.toString());
         formData.append("totalDeals", values.totalDeals.toString());
         formData.append("agreement", values.totalDeals.toString());
         formData.append("commission", values.totalDeals.toString());
         const response = await handleAgentForm(formData, userToken);
+        console.log(response)
         if (response.status === 201) {
             toast.success(response.data.message)
             setTimeout(() => {
@@ -299,7 +301,7 @@ const AgentForm = () => {
                   )}
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="block font-regular text-[16px] text-[#535353] mb-2">
                     State
                   </label>
@@ -314,17 +316,12 @@ const AgentForm = () => {
                       </option>
                     ))}
                   </select>
-                  {/* <input
-                    type="text"
-                    {...formik.getFieldProps("location")}
-                    className="w-full border-[1px] border-[#EAEAEA] rounded-[8px] p-4 outline-none"
-                  /> */}
                   {formik.touched.location && formik.errors.location && (
                     <div className="text-red-500 text-sm mt-1">
                       {formik.errors.location}
                     </div>
                   )}
-                </div>
+                </div> */}
 
                 <div>
                   <label className="block font-regular text-[16px] text-[#535353] mb-2">
