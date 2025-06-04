@@ -179,14 +179,14 @@ const Navbar = () => {
           )}
           {showSignout && (
             <div
-              className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+              className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px] cursor-pointer"
               onClick={()=>navigate('/dashboard')}
             >
               Dashboard
             </div>
           )}
           {showSignout && <div>
-            <VscSignOut className="text-[#337E66] text-[20px]" onClick={handleSignout}/>
+            <VscSignOut className="text-[#337E66] text-[20px] cursor-pointer" onClick={handleSignout}/>
           </div>}
         </div>
       </div>
@@ -251,7 +251,7 @@ const Navbar = () => {
           )}
           {showSignout && (
             <div
-              className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px]"
+              className="w-fit bg-[#337E66] rounded-[15px] font-bold text-[16px] text-[#FFFFFF] px-[20px] lg:px-[31.5px] py-[7px] cursor-pointer"
               onClick={()=>navigate('/dashboard')}
             >
               Dashboard
