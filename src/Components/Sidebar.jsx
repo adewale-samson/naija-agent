@@ -129,7 +129,7 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
       {/* Top */}
       <div className="flex items-center justify-between mb-8">
         {!collapsed && (
-          <h1 className="text-xl font-bold" onClick={() => navigate("/")}>
+          <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate("/")}>
             RentIt
           </h1>
         )}
@@ -147,7 +147,7 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
           <img
             src={agentInfo.image}
             alt="Profile"
-            className={`rounded-full object-cover border-2 border-gray-200
+            className={`rounded-full object-cover border-2 border-gray-200 cursor-pointer
               ${collapsed ? "w-12 h-12" : "w-[118px] h-[118px]"}
             `}
           />
@@ -201,7 +201,7 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
       {/* Logout */}
       <div className="mt-auto w-full flex justify-center">
         <button
-          className="flex items-center gap-2 text-red-600 mt-6"
+          className="flex items-center gap-2 text-red-600 mt-6 cursor-pointer"
           onClick={handleSignout}
         >
           <div className="text-xl">

@@ -91,15 +91,15 @@ const AgentForm = () => {
         }
 
         formData.append("image", photo);
-        formData.append("about", values.bio);
-        formData.append("rents", values.rentPrice.toString());
+        formData.append("bio", values.bio);
+        formData.append("rentPrice", values.rentPrice.toString());
         formData.append("sales", values.sales.toString());
         formData.append("airbnb", values.airbnb.toString());
         // formData.append("stateCity", values.location);
         formData.append("inspectionFee", values.inspectionFee.toString());
         formData.append("totalDeals", values.totalDeals.toString());
-        formData.append("agreement", values.totalDeals.toString());
-        formData.append("commission", values.totalDeals.toString());
+        formData.append("agreement", values.agreement.toString());
+        formData.append("commission", values.commission.toString());
         const response = await handleAgentForm(formData, userToken);
         console.log(response)
         if (response.status === 201) {
