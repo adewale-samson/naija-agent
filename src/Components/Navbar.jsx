@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router";
 import Cookies from "js-cookie";
 import { VscSignOut } from "react-icons/vsc";
+import Logo from '../assets/logo.jpg'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -86,9 +87,12 @@ const Navbar = () => {
     <nav className="font-mont relative px-4 sm:px-6 md:px-8 lg:px-[40px] py-[30px]">
       <div className="flex justify-between items-center">
         <NavLink to="/">
-          <p className="text-[#337E66] text-[18px] lg:text-[32px] leading-[100%] tracking-[0%] font-bold">
+          {/* <p className="text-[#337E66] text-[18px] lg:text-[32px] leading-[100%] tracking-[0%] font-bold">
             RentIt
-          </p>
+          </p> */}
+          <div className="max-w-[60px] lg:max-w-[90px]">
+            <img src={Logo} alt="9ja agent logo" className=""/>
+          </div>
         </NavLink>
 
         {/* Mobile menu button */}

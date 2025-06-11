@@ -10,6 +10,7 @@ import Spinner from "../assets/loader.gif";
 import { SignupAuth } from "../api/auth";
 import Cookies from "js-cookie";
 import nigerianStates from "../constants/states";
+import Logo from "../assets/logo.jpg";
 
 const initialValues = {
   name: "",
@@ -123,9 +124,12 @@ const Signup = () => {
       <ToastContainer />
       <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
         <Link to="/">
-          <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
+          {/* <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
             RentIt
-          </h1>
+          </h1> */}
+          <div className="max-w-[60px] lg:max-w-[90px] cursor-pointer mx-auto py-[20px]">
+            <img src={Logo} alt="9ja agent logo" className="" />
+          </div>
         </Link>
       </div>
       <section className="font-mont py-[0px] sm:py-[30px]">

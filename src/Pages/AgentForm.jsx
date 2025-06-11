@@ -9,6 +9,7 @@ import EditIcon from "../assets/edit-icon2.svg";
 import { handleAgentForm } from "../api/data";
 import Cookies from "js-cookie";
 import { nigerianStates } from "../constants/states";
+import Logo from "../assets/logo.jpg";
 
 const validationSchema = Yup.object({
   bio: Yup.string()
@@ -75,7 +76,7 @@ const AgentForm = () => {
       inspectionFee: 0,
       totalDeals: 0,
       agreement: 0,
-      commission: 0
+      commission: 0,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -101,12 +102,12 @@ const AgentForm = () => {
         formData.append("agreement", values.agreement.toString());
         formData.append("commission", values.commission.toString());
         const response = await handleAgentForm(formData, userToken);
-        console.log(response)
+        console.log(response);
         if (response.status === 201) {
-            toast.success(response.data.message)
-            setTimeout(() => {
-                navigate('/')
-            }, 2000);
+          toast.success(response.data.message);
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
         }
         formik.resetForm();
         setPhoto(null);
@@ -170,9 +171,12 @@ const AgentForm = () => {
       <>
         <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
           <Link to="/">
-            <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
+            {/* <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
               RentIt
-            </h1>
+            </h1> */}
+            <div className="max-w-[60px] lg:max-w-[90px] cursor-pointer mx-auto py-[20px]">
+              <img src={Logo} alt="9ja agent logo" className="" />
+            </div>
           </Link>
         </div>
         <section className="font-mont py-[0] sm:py-[65px]">

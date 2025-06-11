@@ -44,7 +44,7 @@ const ReviewSection = () => {
             />
           </div>
           <p className="font-[800] text-[12px] md:text-[10px] leading-[120%] md:leading-[100%] tracking-[0%] text-center text-[#fff] px-[14px] py-[12px]">
-            RentIt is by far the best website in Nigeria. The drama and stress
+            9ja Agents is by far the best website in Nigeria. The drama and stress
             it takes to find agents in your city is ridiculous.
           </p>
         </div>

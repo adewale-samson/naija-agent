@@ -1,79 +1,81 @@
-import { useFormik } from 'formik';
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { toast, ToastContainer } from 'react-toastify'
-import * as yup from 'yup'
-import { forgotPassword } from '../api/auth';
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { toast, ToastContainer } from "react-toastify";
+import * as yup from "yup";
+import { forgotPassword } from "../api/auth";
 import Spinner from "../assets/loader.gif";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import Logo from "../assets/logo.jpg";
 
 const initialValues = {
-    email: "",
-  };
+  email: "",
+};
 const ForgotPassword = () => {
-    
-    const [loader, setLoader] = useState(false);
-  
-    const navigate = useNavigate();
-    const schema = yup.object({
-      email: yup
-        .string()
-        .email("Please enter a valid email")
-        .required("Email is required"),
-    });
-  
-    const onSubmit = async (values, actions) => {
-      try {
-            // console.log(values)
-            setLoader(true); 
-            await forgotPassword(values)
-            .then(res => {
-            //   console.log(res)
-              Cookies.set('name', getFirstName(res.data.user.name), { expires: 1 });
-                Cookies.set('email', res.data.user.email, { expires: 1 });
-              navigate('/reset-success')
-            })
-            .catch(err => {
-            //   console.log(err)
-              toast.error(err?.response?.data?.message || "Something went wrong!");
-            })
-            
-          } catch (error) {
-            toast.error("Failed to create account. Please try again.");
-            // console.error("Signup error:", error);
-          } finally {
-            setLoader(false);
-            actions.setSubmitting(false);
-          }
-    };
-  
-    const {
-      values,
-      handleSubmit,
-      handleChange,
-      handleBlur,
-      isSubmitting,
-      errors,
-      touched,
-    } = useFormik({
-      initialValues,
-      validationSchema: schema,
-      onSubmit,
-    });
-    function getFirstName(fullName) {
-        if (!fullName) return '';
-        
-        const parts = fullName.trim().split(' ');
-        return parts[0];
-      }
+  const [loader, setLoader] = useState(false);
+
+  const navigate = useNavigate();
+  const schema = yup.object({
+    email: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+  });
+
+  const onSubmit = async (values, actions) => {
+    try {
+      // console.log(values)
+      setLoader(true);
+      await forgotPassword(values)
+        .then((res) => {
+          //   console.log(res)
+          Cookies.set("name", getFirstName(res.data.user.name), { expires: 1 });
+          Cookies.set("email", res.data.user.email, { expires: 1 });
+          navigate("/reset-success");
+        })
+        .catch((err) => {
+          //   console.log(err)
+          toast.error(err?.response?.data?.message || "Something went wrong!");
+        });
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.");
+      // console.error("Signup error:", error);
+    } finally {
+      setLoader(false);
+      actions.setSubmitting(false);
+    }
+  };
+
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    isSubmitting,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit,
+  });
+  function getFirstName(fullName) {
+    if (!fullName) return "";
+
+    const parts = fullName.trim().split(" ");
+    return parts[0];
+  }
   return (
     <div className="min-h-screen bg-[#fff] sm:bg-[#B3D3C9]">
       <ToastContainer />
       <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
         <Link to="/">
-          <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
+          {/* <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
             RentIt
-          </h1>
+          </h1> */}
+          <div className="max-w-[60px] lg:max-w-[90px] cursor-pointer mx-auto py-[20px]">
+            <img src={Logo} alt="9ja agent logo" className="" />
+          </div>
         </Link>
       </div>
       <section className="font-mont py-[0px] sm:py-[30px]">
@@ -126,14 +128,16 @@ const ForgotPassword = () => {
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
               <Link to="/login">
-                <span className="text-[#337E66] cursor-pointer">Back to log in</span>
+                <span className="text-[#337E66] cursor-pointer">
+                  Back to log in
+                </span>
               </Link>
             </p>
           </form>
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

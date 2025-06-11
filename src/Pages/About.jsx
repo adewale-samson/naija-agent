@@ -20,7 +20,7 @@ const About = () => {
       </h1>
       <section className="font-montagu flex flex-col md:flex-row md:justify-between md:items-center items-center gap-6 md:gap-10">
         <h2 className="text-[20px] font-normal leading-[100%] tracking-[0%] ">
-          About us at RentIt
+          About us at 9ja Agents
         </h2>
         <div className="max-w-full md:max-w-[450px]">
           <p className="font-normal text-[15px] leading-[150%] tracking-[0%] mb-6">
@@ -47,7 +47,7 @@ const About = () => {
       </section>
       <section className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10 mb-[40px] md:mb-[80px]">
         <p className="w-full md:w-[465px] text-center md:text-left font-platypi font-normal italic text-[20px] lg:text-[24px] text-[#000] leading-[120%] md:leading-[100%] tracking-[0%]">
-          "RentIt is a directory for agents in Nigeria. With this site, you can
+          "9ja Agents is a directory for agents in Nigeria. With this site, you can
           say goobye to spending so much time before finding the right agents
           that can rent you a house"
         </p>
