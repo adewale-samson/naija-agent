@@ -45,8 +45,8 @@ const Signup = () => {
       .string()
       // .required("Instagram url is required")
       .matches(
-        /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9_.]+(\/)?$/,
-        "Please enter a valid Instagram URL (e.g., https://instagram.com/username)"
+        /^https?:\/\/(www\.)?instagram\.com\/[\w.-]+(\/?[\w?=&%.]*)?$/,
+        "Please enter a valid Instagram URL"
       ),
     phone: yup
       .string()
