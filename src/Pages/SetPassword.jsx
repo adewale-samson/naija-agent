@@ -8,6 +8,7 @@ import * as yup from "yup";
 import Spinner from "../assets/loader.gif";
 import { resetPassword } from "../api/auth";
 import Cookies from "js-cookie";
+import Logo from "../assets/logo.jpg";
 
 const initialValues = {
   newPassword: "",
@@ -27,7 +28,11 @@ const SetPassword = () => {
     setShowConfirmPassword((prev) => !prev);
   };
   const schema = yup.object({
-    newPassword: yup.string().required("Password is required").min(8).matches(
+    newPassword: yup
+      .string()
+      .required("Password is required")
+      .min(8)
+      .matches(
         /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
         "Password must contain at least one uppercase letter, one number and one special character"
       ),
@@ -35,8 +40,7 @@ const SetPassword = () => {
       .string()
       .required("Confirm password is required")
       .min(8)
-      .oneOf([yup.ref('newPassword')], 'Passwords must match')
-      
+      .oneOf([yup.ref("newPassword")], "Passwords must match"),
   });
 
   const onSubmit = async (values, actions) => {
@@ -83,9 +87,12 @@ const SetPassword = () => {
       <ToastContainer />
       <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
         <Link to="/">
-          <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
+          {/* <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
             RentIt
-          </h1>
+          </h1> */}
+          <div className="max-w-[60px] lg:max-w-[90px] cursor-pointer mx-auto py-[20px]">
+            <img src={Logo} alt="9ja agent logo" className="" />
+          </div>
         </Link>
       </div>
       <section className="font-mont py-[0px] sm:py-[30px]">
@@ -180,7 +187,7 @@ const SetPassword = () => {
               )}
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
-              Back to 
+              Back to
               <Link to="/login">
                 <span className="text-[#337E66] cursor-pointer">log in</span>
               </Link>

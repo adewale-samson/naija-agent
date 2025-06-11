@@ -7,8 +7,8 @@ import { toast, ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import Spinner from "../assets/loader.gif";
 import { LoginAuth } from "../api/auth";
-import Cookies from 'js-cookie'
-
+import Cookies from "js-cookie";
+import Logo from "../assets/logo.jpg";
 
 const initialValues = {
   email: "",
@@ -33,35 +33,38 @@ const Login = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-          // console.log(values)
-          setLoader(true); 
-          await LoginAuth(values)
-          .then(res => {
-            console.log(res)
-            Cookies.set('token', res.data.token, { expires: 1 });
-            Cookies.set('id', res.data.data.user._id, { expires: 1 });
-            toast.success("Login successful!");
-            actions.resetForm();
-            setTimeout(() => {
-              if(res.data.data.user.image && res.data.data.user.isVerified && res.data.data.user.inspectionFee){
-                navigate('/dashboard')
-              } else {
-                navigate('/agentform')
-              }
-            }, 2500);
-          })
-          .catch(err => {
-            // console.log(err)
-            toast.error(err?.response?.data?.message || "Something went wrong!");
-          })
-          
-        } catch (error) {
-          toast.error("Failed to create account. Please try again.");
-          // console.error("Signup error:", error);
-        } finally {
-          setLoader(false);
-          actions.setSubmitting(false);
-        }
+      // console.log(values)
+      setLoader(true);
+      await LoginAuth(values)
+        .then((res) => {
+          console.log(res);
+          Cookies.set("token", res.data.token, { expires: 1 });
+          Cookies.set("id", res.data.data.user._id, { expires: 1 });
+          toast.success("Login successful!");
+          actions.resetForm();
+          setTimeout(() => {
+            if (
+              res.data.data.user.image &&
+              res.data.data.user.isVerified &&
+              res.data.data.user.inspectionFee
+            ) {
+              navigate("/dashboard");
+            } else {
+              navigate("/agentform");
+            }
+          }, 2500);
+        })
+        .catch((err) => {
+          // console.log(err)
+          toast.error(err?.response?.data?.message || "Something went wrong!");
+        });
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.");
+      // console.error("Signup error:", error);
+    } finally {
+      setLoader(false);
+      actions.setSubmitting(false);
+    }
   };
 
   const {
@@ -82,9 +85,14 @@ const Login = () => {
       <ToastContainer />
       <div className="bg-[#fff] border-b-[0px] sm:border-b-[1px] border-b-[#337E66]">
         <Link to="/">
-          <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
+          {/* <h1 className="font-bold font-mont text-[#337E66] text-[32px] text-center cursor-pointer mx-auto py-[20px]">
             RentIt
-          </h1>
+          </h1> */}
+          <div
+            className="max-w-[60px] lg:max-w-[90px] cursor-pointer mx-auto py-[20px]"
+          >
+            <img src={Logo} alt="9ja agent logo" className="" />
+          </div>
         </Link>
       </div>
       <section className="font-mont py-[0px] sm:py-[30px]">

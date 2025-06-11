@@ -70,7 +70,7 @@ const Trending = () => {
         </div>
       </form>
       <h1 className="max-w-[742px] font-medium text-[20px] text-center leading-[150%] tracking-[0] mx-auto my-[42px]">
-        Find agents anywhere in Nigeria with ease. RentIt is here to help make
+        Find agents anywhere in Nigeria with ease. 9ja Agents is here to help make
         rentals, home ownerships and more easy. Connect with over 5,000 agents
         all over the country here.
       </h1>

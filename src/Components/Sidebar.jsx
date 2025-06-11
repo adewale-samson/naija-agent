@@ -11,6 +11,7 @@ import { RiBuildingFill } from "react-icons/ri";
 import { VscSignOut } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
+import Logo from '../assets/logo.jpg'
 
 const navItems = [
   {
@@ -129,9 +130,13 @@ const Sidebar = ({ agentInfo, activeItem, onItemClick }) => {
       {/* Top */}
       <div className="flex items-center justify-between mb-8">
         {!collapsed && (
-          <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate("/")}>
-            RentIt
-          </h1>
+          // <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate("/")}>
+          //   RentIt
+          // </h1>
+          <div className="max-w-[60px] lg:max-w-[90px] cursor-pointer" onClick={() => navigate("/")}>
+                      <img src={Logo} alt="9ja agent logo" className=""/>
+                    </div>
+          
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
