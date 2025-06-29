@@ -1,6 +1,9 @@
 import Boy from "../assets/smiling-boy.png";
 import Girl from "../assets/smiling-girl.png";
 import Ladies from "../assets/ladies.png";
+import ReviewOne from "../assets/review-one.png";
+import ReviewTwo from "../assets/review-two.png";
+import ReviewThree from "../assets/review-three.png";
 
 const ReviewSection = () => {
   return (
@@ -12,8 +15,9 @@ const ReviewSection = () => {
         <div className="w-full md:w-[278px] rounded-[30px] bg-[#337E66]">
           <div className="w-full md:w-[278px] h-[152px]">
             <img
-              src={Boy}
-              alt="smiling boy"
+              // src={Boy}
+              src={ReviewOne}
+              alt="review image"
               className="w-full h-full object-cover rounded-t-[30px]"
             />
           </div>
@@ -25,8 +29,9 @@ const ReviewSection = () => {
         <div className="w-full md:w-[278px] rounded-[30px] bg-[#337E66]">
           <div className="w-full md:w-[278px] h-[152px]">
             <img
-              src={Girl}
-              alt="smiling girl"
+              // src={Girl}
+              src={ReviewTwo}
+              alt="review image"
               className="w-full h-full object-cover rounded-t-[30px]"
             />
           </div>
@@ -38,8 +43,9 @@ const ReviewSection = () => {
         <div className="w-full md:w-[278px] rounded-[30px] bg-[#337E66]">
           <div className="w-full md:w-[278px] h-[152px]">
             <img
-              src={Ladies}
-              alt="ladies"
+              // src={Ladies}
+              src={ReviewThree}
+              alt="review image"
               className="w-full h-full object-cover rounded-t-[30px]"
             />
           </div>
