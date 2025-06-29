@@ -1,8 +1,10 @@
 import Spread from "../assets/about-spread.png";
 import Meet from "../assets/about-meet.png";
+import Family from "../assets/family.png";
 import Woman from "../assets/woman-key.png";
 import Women from "../assets/women-meeting.png";
 import Room from "../assets/room.png";
+import Guy from "../assets/guy.png";
 import { motion } from "framer-motion";
 
 const About = () => {
@@ -53,7 +55,8 @@ const About = () => {
         </p>
         <div className="w-full md:w-auto">
           <img
-            src={Meet}
+            // src={Meet}
+            src={Family}
             alt="meet"
             className="w-full md:w-auto object-cover"
           />
@@ -65,8 +68,9 @@ const About = () => {
           What you are guaranteed to gain by using our site
         </h3>
         <div className="flex flex-col md:flex-row gap-6 md:justify-between flex-wrap">
-          <div className="w-full md:w-[278px] rounded-[30px] border border-[#008000] bg-[#fff] overflow-hidden">
-            <div className="w-full md:w-[278px] h-[152px]">
+          <div className="w-full md:w-[261px] rounded-[30px] border border-[#008000] bg-[#fff] overflow-hidden">
+            {/* <div className="w-full md:w-[278px] h-[152px]"> */}
+            <div className="w-full md:w-[261px] h-[242px] overflow-hidden">
               <img
                 src={Woman}
                 alt="woman giving out key"
@@ -77,8 +81,9 @@ const About = () => {
               100% certified agents
             </p>
           </div>
-          <div className="w-full md:w-[278px] rounded-[30px] border border-[#008000] bg-[#fff] overflow-hidden">
-            <div className="w-full md:w-[278px] h-[152px]">
+          <div className="w-full md:w-[261px] rounded-[30px] border border-[#008000] bg-[#fff] overflow-hidden">
+            {/* <div className="w-full md:w-[278px] h-[152px]"> */}
+            <div className="w-full md:w-[261px] h-[242px] overflow-hidden">
               <img
                 src={Women}
                 alt="women discussing"
@@ -89,11 +94,13 @@ const About = () => {
               Trusted services
             </p>
           </div>
-          <div className="w-full md:w-[278px] rounded-[30px] border border-[#008000] bg-[#fff] overflow-hidden">
-            <div className="w-full md:w-[278px] h-[152px] overflow-none">
+          <div className="w-full md:w-[261px] rounded-[30px] border border-[#008000] bg-[#fff] overflow-hidden">
+            {/* <div className="w-full md:w-[278px] h-[152px] overflow-none"> */}
+            <div className="w-full md:w-[261px] h-[242px] overflow-hidden">
               <img
-                src={Room}
-                alt="picture of a room"
+                // src={Room}
+                src={Guy}
+                alt="guy pressing laptop"
                 className="w-full h-full object-cover rounded-t-[30px]"
               />
             </div>
