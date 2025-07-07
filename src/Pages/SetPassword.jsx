@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router";
 import { useNavigate } from "react-router";
@@ -19,6 +19,7 @@ const SetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [token, setToken] = useState(null)
 
   const navigate = useNavigate();
   const toggleVisibility = () => {
@@ -27,6 +28,13 @@ const SetPassword = () => {
   const toggleConfirmVisibility = () => {
     setShowConfirmPassword((prev) => !prev);
   };
+  useEffect(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenParam = urlParams.get("token");
+      if (tokenParam) {
+        setToken(tokenParam);
+      }
+    }, []);
   const schema = yup.object({
     newPassword: yup
       .string()
@@ -47,7 +55,7 @@ const SetPassword = () => {
     try {
       // console.log(values);
       setLoader(true);
-      await resetPassword(values)
+      await resetPassword(values, token)
         .then((res) => {
           // console.log(res)
           toast.success("Reset successful!");
@@ -183,7 +191,7 @@ const SetPassword = () => {
                   className="mx-auto"
                 />
               ) : (
-                "Reset password"
+                "Set password"
               )}
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
