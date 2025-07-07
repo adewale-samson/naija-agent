@@ -191,7 +191,7 @@ const SetPassword = () => {
                   className="mx-auto"
                 />
               ) : (
-                "Reset password"
+                "Set password"
               )}
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
