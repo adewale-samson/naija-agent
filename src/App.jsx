@@ -17,8 +17,13 @@ import ResetNotification from "./Pages/ResetNotification";
 import SetPassword from "./Pages/SetPassword";
 import Layout from "./layouts/FramerLayout";
 import Dashboard from "./Pages/Dashboard";
+import { useEffect } from 'react'
+import { loadGoogleAnalytics } from './lib/analytics'
 
 function App() {
+  useEffect(() => {
+  loadGoogleAnalytics()
+}, [])
   return (
     <Layout>
       <div className="app-container">
