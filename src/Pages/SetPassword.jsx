@@ -155,7 +155,7 @@ const SetPassword = () => {
                 >
                   {errors.confirmPassword && touched.confirmPassword
                     ? `${errors.confirmPassword}`
-                    : "Password"}
+                    : "Confirm new password"}
                 </label>
               </div>
               <input
@@ -191,7 +191,7 @@ const SetPassword = () => {
                   className="mx-auto"
                 />
               ) : (
-                "Set password"
+                "Reset password"
               )}
             </button>
             <p className="font-regular leading-[20.8px] text-4 text-[#828282] text-center mt-4 ">
