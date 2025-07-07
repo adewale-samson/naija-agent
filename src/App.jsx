@@ -21,9 +21,9 @@ import { useEffect } from 'react'
 import { loadGoogleAnalytics } from './lib/analytics'
 
 function App() {
-//   useEffect(() => {
-//   loadGoogleAnalytics()
-// }, [])
+  useEffect(() => {
+  loadGoogleAnalytics()
+}, [])
   return (
     <Layout>
       <div className="app-container">
