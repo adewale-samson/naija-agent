@@ -5,11 +5,11 @@ import Loader from "../assets/loader.gif";
 import { verifyEmail } from "../api/auth";
 import { ToastContainer } from "react-toastify";
 import Logo from "../assets/logo.jpg";
+import Cookies from "js-cookie";
 
 const Verified = () => {
   const [token, setToken] = useState(null);
-  const [loader, setLoader] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState(true);
 
   const navigate = useNavigate();
 
@@ -21,26 +21,32 @@ const Verified = () => {
     }
   }, []);
 
-  const handleVerify = () => {
-    setLoader(true);
-    verifyEmail(token)
-      .then((response) => {
-        // console.log(response)
-        // setIsVerified(true);
-        setLoader(false);
-        setTimeout(() => {
-          navigate("/login");
-        }, 2500);
-      })
-      .catch((err) => {
-        // console.log(err);
-        setLoader(false);
-        // router.push("/auth/login");
-      })
-      .finally(() => {
-        setLoader(false);
-      });
+  useEffect(() => {
+    if (token) {
+      verifyEmail(token)
+        .then((response) => {
+          setIsVerified(false);
+        })
+        .catch((err) => {
+          setIsVerified(false);
+        })
+    }
+  }, [token]);
+
+  const handleContinue = () => {
+    Cookies.remove("name");
+    Cookies.remove("email");
+    navigate("/login");
   };
+
+  if (isVerified) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#fff] sm:bg-[#B3D3C9]">
+        <img src={Loader} alt="Loading..." className="w-12 h-12" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen font-mont bg-[#fff] sm:bg-[#B3D3C9] ">
       <ToastContainer />
@@ -56,24 +62,24 @@ const Verified = () => {
       </div>
       <section className="my-[60px] sm:my-[140px] md:my-[80px]">
         <div className="flex flex-col justify-center h-auto sm:h-[50vh]">
-          <div className="w-[95%] sm:w-[538px] bg-[#fff] p-[32px] sm:p-[16px] rounded-[8px]  text-center m-auto ">
-            <img src={Verify} alt="verify icon" className="mx-auto my-[24px]" />
+          <div className="w-[95%] sm:w-[538px] bg-[#fff] p-[24px] sm:p-[16px] rounded-[8px]  text-center m-auto ">
+            <img src={Verify} alt="verify icon" className="mx-auto my-[16px]" />
             <h1 className="text-[32px] font-medium leading-[41.6px] text-[#2A2A2A] mb-2 xm:mt-8 text-center ">
               Email Verification
             </h1>
-            <p className="font-regular text-[16px] leading-[20.8px] text-[#828282] mb-[32px] text-center ">
+            <p className="font-normal text-[16px] leading-[20.8px] text-[#828282] mb-[8px] text-center ">
               Your email address has been verified successfully!
+            </p>
+            <p className="font-normal text-[16px] leading-[20.8px] text-[#828282] mb-[24px] text-center">
+              Welcome to 9ja Agents! Click continue to update your profile with
+              your details, inspection fees, listings, and photos. Start
+              connecting with your target audience today!
             </p>
             <button
               className="bg-[#337E66] py-[14px] w-full font-medium text-[#ffff] font-[500] leading-[24px] text-[16px] cursor-pointer"
-              onClick={handleVerify}
+              onClick={handleContinue}
             >
-              {loader ? (
-                <img src={Loader} alt="loader" className="mx-auto w-4 h-4" />
-              ) : (
-                "Continue"
-              )}
-              {/* Continue */}
+              Continue
             </button>
           </div>
         </div>
