@@ -4,7 +4,7 @@ import LandingHero from "../assets/landing-hero.png";
 import { AiOutlineHome } from "react-icons/ai";
 import { AiFillHome } from "react-icons/ai";
 import { BsTelephone } from "react-icons/bs";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import Cookies from "js-cookie";
 
 const Hero = () => {
@@ -45,27 +45,29 @@ const Hero = () => {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-wrap gap-4">
-            <button className="w-[178px] bg-[#337E66] text-[#fff] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#006a50] transition" onClick={()=>navigate('/trending')}>
+          <div className="flex flex-col flex-wrap gap-4">
+            <button className="w-[178px] bg-[#337E66] text-[#fff] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#006a50] transition cursor-pointer" onClick={()=>navigate('/trending')}>
               Search here
             </button>
-            {showSignup && (
+            {/* {showSignup && (
               <button
                 onClick={() => navigate("/signup")}
                 className="w-[178px] border border-[#337E66] bg-[#fff] text-[#007F5F] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#f0fdfa] transition"
               >
                 Sign up
               </button>
+            )} */}
+            {showSignup && (
+              // <button
+              //   onClick={() => navigate("/signup")}
+              //   className="w-[178px] border border-[#337E66] bg-[#fff] text-[#007F5F] text-[16px] leading-none font-medium py-2 rounded-[20px] hover:bg-[#f0fdfa] transition"
+              // >
+              //   Sign up
+              // </button>
+                <p>Sign up as an agent <Link className="text-[#007F5F] text-[16px] leading-none font-medium underline cursor-pointer" to='/signup'>here</Link></p>
             )}
           </div>
 
-          {/* Tags */}
-          {/* <div className="flex flex-wrap gap-3 pt-4 text-sm font-medium">
-            <span className="bg-white border border-gray-300 px-4 py-2 rounded-full text-gray-700">Find agents near you</span>
-            <span className="bg-white border border-gray-300 px-4 py-2 rounded-full text-gray-700">Know inspection time</span>
-            <span className="bg-white border border-gray-300 px-4 py-2 rounded-full text-gray-700">Book your slot</span>
-            <span className="bg-[#007F5F] text-white px-4 py-2 rounded-full">Get started</span>
-          </div> */}
         </div>
 
         {/* Image */}
